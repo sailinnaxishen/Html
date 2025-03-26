@@ -1,0 +1,9 @@
+2025-03-25 05:32:20,550 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@localhost:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&directConnection=true&connectTimeoutMS=3000
+2025-03-25 05:32:20,574 - INFO - MongoDB连接成功
+2025-03-25 05:32:20,575 - INFO - 热搜数据采集服务启动...
+2025-03-25 05:32:20,964 - INFO - 成功获取 50 条B站热搜
+2025-03-25 05:32:20,968 - INFO - 成功保存 50 条B站热搜数据
+2025-03-25 05:32:21,470 - INFO - 成功获取 52 条微博热搜
+2025-03-25 05:32:21,474 - INFO - 成功保存 52 条微博热搜数据
+2025-03-25 05:32:21,476 - INFO - 热搜数据更新完成 - 2025-03-25 05:32:21
+2025-03-25 05:32:21,967 - INFO - 服务停止...

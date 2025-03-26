@@ -1,0 +1,155 @@
+// 主题变量
+$primary-color: #007aff;
+$secondary-color: #5856d6;
+$accent-color: #ff2d55;
+
+// 亮色主题变量
+$light-bg-color: #ffffff;
+$light-text-color: #333333;
+$light-card-bg: rgba(245, 245, 247, 0.75);
+$light-border-color: #e5e5e5;
+$light-shadow-color: rgba(0, 0, 0, 0.1);
+$light-text-secondary: #666666;
+$light-item-bg: rgba(255, 255, 255, 0.75);
+$light-item-hover-bg: rgba(245, 245, 245, 0.75);
+$light-rank-bg: rgba(240, 240, 240, 0.75);
+$light-rank-color: #666666;
+$light-tag-bg: rgba(240, 240, 240, 0.75);
+$light-scrollbar-thumb: #cccccc;
+$light-scrollbar-track: rgba(245, 245, 247, 0.75);
+
+// 暗色主题变量
+$dark-bg-color: #1a1a1a;
+$dark-text-color: #ffffff;
+$dark-card-bg: rgba(45, 45, 45, 0.75);
+$dark-border-color: #3d3d3d;
+$dark-shadow-color: rgba(0, 0, 0, 0.5);
+$dark-text-secondary: #b0b0b0;
+$dark-item-bg: rgba(45, 45, 45, 0.75);
+$dark-item-hover-bg: rgba(61, 61, 61, 0.75);
+$dark-rank-bg: rgba(61, 61, 61, 0.75);
+$dark-rank-color: #b0b0b0;
+$dark-tag-bg: rgba(61, 61, 61, 0.75);
+$dark-scrollbar-thumb: #4d4d4d;
+$dark-scrollbar-track: rgba(45, 45, 45, 0.75);
+
+// CSS变量
+:root {
+  --primary-color: #409eff;
+  --secondary-color: #67c23a;
+  --accent-color: #e6a23c;
+  --danger-color: #f56c6c;
+  --info-color: #909399;
+  --text-color: #303133;
+  --text-color-secondary: #606266;
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --accent-color: #{$accent-color};
+  --bg-color: #{$light-bg-color};
+  --text-color: #{$light-text-color};
+  --card-bg: #{$light-card-bg};
+  --border-color: #{$light-border-color};
+  --shadow-color: #{$light-shadow-color};
+  --text-secondary: #{$light-text-secondary};
+  --item-bg: #{$light-item-bg};
+  --item-hover-bg: #{$light-item-hover-bg};
+  --rank-bg: #{$light-rank-bg};
+  --rank-color: #{$light-rank-color};
+  --tag-bg: #{$light-tag-bg};
+  --scrollbar-thumb: #{$light-scrollbar-thumb};
+  --scrollbar-track: #{$light-scrollbar-track};
+}
+
+.dark-mode {
+  --primary-color: #{lighten($primary-color, 10%)};
+  --secondary-color: #{lighten($secondary-color, 10%)};
+  --accent-color: #{lighten($accent-color, 10%)};
+  --bg-color: #{$dark-bg-color};
+  --text-color: #{$dark-text-color};
+  --card-bg: #{$dark-card-bg};
+  --border-color: #{$dark-border-color};
+  --shadow-color: #{$dark-shadow-color};
+  --text-secondary: #{$dark-text-secondary};
+  --item-bg: #{$dark-item-bg};
+  --item-hover-bg: #{$dark-item-hover-bg};
+  --rank-bg: #{$dark-rank-bg};
+  --rank-color: #{$dark-rank-color};
+  --tag-bg: #{$dark-tag-bg};
+  --scrollbar-thumb: #{$dark-scrollbar-thumb};
+  --scrollbar-track: #{$dark-scrollbar-track};
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: transparent;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px var(--shadow-color);
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &-primary {
+    background-color: var(--primary-color);
+    color: white;
+
+    &:hover {
+      background-color: #{darken($primary-color, 10%)};
+    }
+  }
+
+  &-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+
+    &:hover {
+      background-color: #{darken($secondary-color, 10%)};
+    }
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
