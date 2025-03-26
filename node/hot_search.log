@@ -297,3 +297,11 @@
 2025-03-26 20:15:07,608 - INFO - 成功获取 50 条微博热搜
 2025-03-26 20:15:07,616 - INFO - 成功保存 50 条微博热搜数据
 2025-03-26 20:15:07,619 - INFO - 热搜数据更新完成 - 2025-03-26 20:15:07
+2025-03-26 20:36:49,730 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-03-26 20:36:49,776 - INFO - MongoDB连接成功
+2025-03-26 20:36:49,776 - INFO - 热搜数据采集服务启动...
+2025-03-26 20:36:50,313 - INFO - 成功获取 50 条B站热搜
+2025-03-26 20:36:50,324 - INFO - 成功保存 50 条B站热搜数据
+2025-03-26 20:36:50,896 - INFO - 成功获取 51 条微博热搜
+2025-03-26 20:36:50,903 - INFO - 成功保存 51 条微博热搜数据
+2025-03-26 20:36:50,905 - INFO - 热搜数据更新完成 - 2025-03-26 20:36:50

@@ -65,7 +65,7 @@ npm run build
 ```
 ### 生产环境
 ```bash
-npn run production
+npn run preview
 ```
 ## 项目结构
 

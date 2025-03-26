@@ -171,7 +171,7 @@ VITE_API_URL=VITE_API_BASE_URL
 2. 选择部署方式（Docker 或手动部署）
 3. 按照对应方式的步骤进行部署
 4. 访问 http://localhost:41737 查看前端页面
-
+5. 修改背景图在/vue/App.vue/40lines
 ## 注意事项
 
 - 确保 MongoDB 容器正常运行
@@ -179,4 +179,4 @@ VITE_API_URL=VITE_API_BASE_URL
 - 确保端口未被占用
 - Docker 部署时，MongoDB 端口映射为 27018
 - 上传的文件会持久化存储在 Docker volume 中
-- 修改vue项目的文件后请清除vite构建缓存重新构建再运行dovker的构建
+- 修改vue项目的文件后请务必清除vite构建缓存重新构建再运行dovker的构建

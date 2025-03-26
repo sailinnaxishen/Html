@@ -153,11 +153,11 @@
             <h2>项目地址</h2>
             <div class="project-content">
               <div class="project-links">
-                <a href="https://gitee.com/Sailinnalanyin" target="_blank" class="project-link">
+                <a href="https://gitee.com/Sailinnalanyin/Html" target="_blank" class="project-link">
                   <el-icon><Platform /></el-icon>
                   <span>Gitee</span>
                 </a>
-                <a href="https://github.com/sailinnaxishen" target="_blank" class="project-link">
+                <a href="https://github.com/sailinnaxishen/Html" target="_blank" class="project-link">
                   <el-icon><Platform /></el-icon>
                   <span>GitHub</span>
                 </a>
