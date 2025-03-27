@@ -1,307 +1,93 @@
-2025-03-25 05:12:32,338 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:14:30,161 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:16:54,511 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:17:12,164 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:18:41,843 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:19:00,986 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://admin:123456@localhost:27017/hot_search_db
-2025-03-25 05:19:00,998 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:20:02,874 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://admin:123456@localhost:27017/hot_search_db
-2025-03-25 05:20:02,888 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:24:09,386 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://admin:123456@localhost:27017/hot_search_db
-2025-03-25 05:24:09,402 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:25:34,741 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://admin:123456@localhost:27017/hot_search_db
-2025-03-25 05:25:34,755 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:26:12,509 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://admin:123456@localhost:27017/hot_search_db
-2025-03-25 05:26:12,522 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:26:23,078 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://admin:123456@localhost:27017/hot_search_db
-2025-03-25 05:26:23,091 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:26:27,016 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://admin:123456@localhost:27017/hot_search_db
-2025-03-25 05:26:27,029 - ERROR - MongoDB连接失败: Authentication failed., full error: {'ok': 0.0, 'errmsg': 'Authentication failed.', 'code': 18, 'codeName': 'AuthenticationFailed'}
-2025-03-25 05:26:47,286 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@localhost:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&directConnection=true&connectTimeoutMS=3000
-2025-03-25 05:26:47,327 - INFO - MongoDB连接成功
-2025-03-25 05:26:47,328 - INFO - 热搜数据采集服务启动...
-2025-03-25 05:26:47,750 - INFO - 成功获取 50 条B站热搜
-2025-03-25 05:26:47,756 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 05:26:48,275 - INFO - 成功获取 51 条微博热搜
-2025-03-25 05:26:48,283 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 05:26:48,294 - INFO - 热搜数据更新完成 - 2025-03-25 05:26:48
-2025-03-25 05:27:00,524 - INFO - 服务停止...
-2025-03-24 22:50:56,022 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1
-2025-03-24 22:51:02,010 - INFO - MongoDB连接成功
-2025-03-24 22:51:02,010 - INFO - 热搜数据采集服务启动...
-2025-03-24 22:51:02,459 - INFO - 成功获取 50 条B站热搜
-2025-03-24 22:51:02,468 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 22:51:02,980 - INFO - 成功获取 51 条微博热搜
-2025-03-24 22:51:02,987 - INFO - 成功保存 51 条微博热搜数据
-2025-03-24 22:51:02,989 - INFO - 热搜数据更新完成 - 2025-03-24 22:51:02
-2025-03-24 22:54:02,271 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-24 22:54:07,379 - INFO - MongoDB连接成功
-2025-03-24 22:54:07,379 - INFO - 热搜数据采集服务启动...
-2025-03-24 22:54:07,857 - INFO - 成功获取 50 条B站热搜
-2025-03-24 22:54:07,865 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 22:54:08,334 - INFO - 成功获取 51 条微博热搜
-2025-03-24 22:54:08,345 - INFO - 成功保存 51 条微博热搜数据
-2025-03-24 22:54:08,349 - INFO - 热搜数据更新完成 - 2025-03-24 22:54:08
-2025-03-24 22:56:15,705 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-24 22:56:15,743 - INFO - MongoDB连接成功
-2025-03-24 22:56:15,743 - INFO - 热搜数据采集服务启动...
-2025-03-24 22:56:16,175 - INFO - 成功获取 50 条B站热搜
-2025-03-24 22:56:16,187 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 22:56:16,750 - INFO - 成功获取 50 条微博热搜
-2025-03-24 22:56:16,757 - INFO - 成功保存 50 条微博热搜数据
-2025-03-24 22:56:16,758 - INFO - 热搜数据更新完成 - 2025-03-24 22:56:16
-2025-03-24 22:59:15,157 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-24 22:59:15,186 - INFO - MongoDB连接成功
-2025-03-24 22:59:15,187 - INFO - 热搜数据采集服务启动...
-2025-03-24 22:59:15,590 - INFO - 成功获取 50 条B站热搜
-2025-03-24 22:59:15,600 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 22:59:16,088 - INFO - 成功获取 51 条微博热搜
-2025-03-24 22:59:16,095 - INFO - 成功保存 51 条微博热搜数据
-2025-03-24 22:59:16,097 - INFO - 热搜数据更新完成 - 2025-03-24 22:59:16
-2025-03-24 23:01:39,703 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-24 23:01:39,734 - INFO - MongoDB连接成功
-2025-03-24 23:01:39,734 - INFO - 热搜数据采集服务启动...
-2025-03-24 23:01:40,122 - INFO - 成功获取 50 条B站热搜
-2025-03-24 23:01:40,136 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 23:01:40,582 - INFO - 成功获取 50 条微博热搜
-2025-03-24 23:01:40,588 - INFO - 成功保存 50 条微博热搜数据
-2025-03-24 23:01:40,590 - INFO - 热搜数据更新完成 - 2025-03-24 23:01:40
-2025-03-24 23:04:54,788 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-24 23:04:54,826 - INFO - MongoDB连接成功
-2025-03-24 23:04:54,828 - INFO - 热搜数据采集服务启动...
-2025-03-24 23:04:55,256 - INFO - 成功获取 50 条B站热搜
-2025-03-24 23:04:55,267 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 23:04:55,727 - INFO - 成功获取 51 条微博热搜
-2025-03-24 23:04:55,736 - INFO - 成功保存 51 条微博热搜数据
-2025-03-24 23:04:55,738 - INFO - 热搜数据更新完成 - 2025-03-24 23:04:55
-2025-03-24 23:06:31,385 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-24 23:06:31,418 - INFO - MongoDB连接成功
-2025-03-24 23:06:31,419 - INFO - 热搜数据采集服务启动...
-2025-03-24 23:06:31,875 - INFO - 成功获取 50 条B站热搜
-2025-03-24 23:06:31,887 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 23:06:32,379 - INFO - 成功获取 51 条微博热搜
-2025-03-24 23:06:32,385 - INFO - 成功保存 51 条微博热搜数据
-2025-03-24 23:06:32,387 - INFO - 热搜数据更新完成 - 2025-03-24 23:06:32
-2025-03-24 23:09:12,448 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-24 23:09:12,485 - INFO - MongoDB连接成功
-2025-03-24 23:09:12,486 - INFO - 热搜数据采集服务启动...
-2025-03-24 23:09:12,960 - INFO - 成功获取 50 条B站热搜
-2025-03-24 23:09:12,972 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 23:09:13,453 - INFO - 成功获取 51 条微博热搜
-2025-03-24 23:09:13,459 - INFO - 成功保存 51 条微博热搜数据
-2025-03-24 23:09:13,461 - INFO - 热搜数据更新完成 - 2025-03-24 23:09:13
-2025-03-24 23:11:36,505 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-24 23:11:36,537 - INFO - MongoDB连接成功
-2025-03-24 23:11:36,537 - INFO - 热搜数据采集服务启动...
-2025-03-24 23:11:36,976 - INFO - 成功获取 50 条B站热搜
-2025-03-24 23:11:36,987 - INFO - 成功保存 50 条B站热搜数据
-2025-03-24 23:11:37,494 - INFO - 成功获取 51 条微博热搜
-2025-03-24 23:11:37,501 - INFO - 成功保存 51 条微博热搜数据
-2025-03-24 23:11:37,503 - INFO - 热搜数据更新完成 - 2025-03-24 23:11:37
-2025-03-25 00:11:38,045 - INFO - 成功获取 50 条B站热搜
-2025-03-25 00:11:38,054 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 00:11:38,587 - INFO - 成功获取 50 条微博热搜
-2025-03-25 00:11:38,598 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 00:11:38,600 - INFO - 热搜数据更新完成 - 2025-03-25 00:11:38
-2025-03-25 01:11:39,183 - INFO - 成功获取 50 条B站热搜
-2025-03-25 01:11:39,192 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 01:11:39,736 - INFO - 成功获取 51 条微博热搜
-2025-03-25 01:11:39,745 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 01:11:39,749 - INFO - 热搜数据更新完成 - 2025-03-25 01:11:39
-2025-03-25 02:11:44,278 - INFO - 成功获取 50 条B站热搜
-2025-03-25 02:11:44,289 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 02:11:44,844 - INFO - 成功获取 51 条微博热搜
-2025-03-25 02:11:44,852 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 02:11:44,854 - INFO - 热搜数据更新完成 - 2025-03-25 02:11:44
-2025-03-25 03:11:45,533 - INFO - 成功获取 50 条B站热搜
-2025-03-25 03:11:45,542 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 03:11:46,154 - INFO - 成功获取 51 条微博热搜
-2025-03-25 03:11:46,162 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 03:11:46,166 - INFO - 热搜数据更新完成 - 2025-03-25 03:11:46
-2025-03-25 04:11:46,715 - INFO - 成功获取 50 条B站热搜
-2025-03-25 04:11:46,723 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 04:11:47,274 - INFO - 成功获取 50 条微博热搜
-2025-03-25 04:11:47,282 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 04:11:47,284 - INFO - 热搜数据更新完成 - 2025-03-25 04:11:47
-2025-03-25 12:16:05,858 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-25 12:16:05,895 - INFO - MongoDB连接成功
-2025-03-25 12:16:05,896 - INFO - 热搜数据采集服务启动...
-2025-03-25 12:16:10,381 - INFO - 成功获取 50 条B站热搜
-2025-03-25 12:16:10,397 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 12:16:10,899 - INFO - 成功获取 51 条微博热搜
-2025-03-25 12:16:10,909 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 12:16:10,912 - INFO - 热搜数据更新完成 - 2025-03-25 12:16:10
-2025-03-25 12:21:40,447 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-25 12:21:40,488 - INFO - MongoDB连接成功
-2025-03-25 12:21:40,488 - INFO - 热搜数据采集服务启动...
-2025-03-25 12:21:40,914 - INFO - 成功获取 50 条B站热搜
-2025-03-25 12:21:40,924 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 12:21:41,374 - INFO - 成功获取 51 条微博热搜
-2025-03-25 12:21:41,382 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 12:21:41,384 - INFO - 热搜数据更新完成 - 2025-03-25 12:21:41
-2025-03-25 13:03:18,064 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-25 13:03:18,095 - INFO - MongoDB连接成功
-2025-03-25 13:03:18,095 - INFO - 热搜数据采集服务启动...
-2025-03-25 13:03:18,522 - INFO - 成功获取 50 条B站热搜
-2025-03-25 13:03:18,541 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 13:03:19,052 - INFO - 成功获取 51 条微博热搜
-2025-03-25 13:03:19,059 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 13:03:19,061 - INFO - 热搜数据更新完成 - 2025-03-25 13:03:19
-2025-03-25 13:04:46,008 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-25 13:04:46,035 - INFO - MongoDB连接成功
-2025-03-25 13:04:46,036 - INFO - 热搜数据采集服务启动...
-2025-03-25 13:04:46,406 - INFO - 成功获取 50 条B站热搜
-2025-03-25 13:04:46,418 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 13:04:46,879 - INFO - 成功获取 51 条微博热搜
-2025-03-25 13:04:46,887 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 13:04:46,890 - INFO - 热搜数据更新完成 - 2025-03-25 13:04:46
-2025-03-25 13:06:03,756 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-25 13:06:03,787 - INFO - MongoDB连接成功
-2025-03-25 13:06:03,788 - INFO - 热搜数据采集服务启动...
-2025-03-25 13:06:08,178 - INFO - 成功获取 50 条B站热搜
-2025-03-25 13:06:08,194 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 13:06:08,729 - INFO - 成功获取 50 条微博热搜
-2025-03-25 13:06:08,739 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 13:06:08,741 - INFO - 热搜数据更新完成 - 2025-03-25 13:06:08
-2025-03-25 14:06:13,246 - INFO - 成功获取 50 条B站热搜
-2025-03-25 14:06:13,254 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 14:06:13,816 - INFO - 成功获取 50 条微博热搜
-2025-03-25 14:06:13,824 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 14:06:13,826 - INFO - 热搜数据更新完成 - 2025-03-25 14:06:13
-2025-03-25 15:06:19,343 - INFO - 成功获取 50 条B站热搜
-2025-03-25 15:06:19,352 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 15:06:19,877 - INFO - 成功获取 50 条微博热搜
-2025-03-25 15:06:19,887 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 15:06:19,889 - INFO - 热搜数据更新完成 - 2025-03-25 15:06:19
-2025-03-25 16:06:20,366 - INFO - 成功获取 50 条B站热搜
-2025-03-25 16:06:20,374 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 16:06:20,889 - INFO - 成功获取 50 条微博热搜
-2025-03-25 16:06:20,896 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 16:06:20,899 - INFO - 热搜数据更新完成 - 2025-03-25 16:06:20
-2025-03-25 17:06:21,392 - INFO - 成功获取 50 条B站热搜
-2025-03-25 17:06:21,399 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 17:06:21,910 - INFO - 成功获取 50 条微博热搜
-2025-03-25 17:06:21,917 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 17:06:21,920 - INFO - 热搜数据更新完成 - 2025-03-25 17:06:21
-2025-03-25 18:06:22,406 - INFO - 成功获取 50 条B站热搜
-2025-03-25 18:06:22,414 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 18:06:22,944 - INFO - 成功获取 50 条微博热搜
-2025-03-25 18:06:22,951 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 18:06:22,953 - INFO - 热搜数据更新完成 - 2025-03-25 18:06:22
-2025-03-25 19:06:23,668 - INFO - 成功获取 50 条B站热搜
-2025-03-25 19:06:23,678 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 19:06:24,386 - INFO - 成功获取 50 条微博热搜
-2025-03-25 19:06:24,394 - INFO - 成功保存 50 条微博热搜数据
-2025-03-25 19:06:24,397 - INFO - 热搜数据更新完成 - 2025-03-25 19:06:24
-2025-03-25 20:06:25,057 - INFO - 成功获取 50 条B站热搜
-2025-03-25 20:06:25,068 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 20:06:25,673 - INFO - 成功获取 51 条微博热搜
-2025-03-25 20:06:25,681 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 20:06:25,684 - INFO - 热搜数据更新完成 - 2025-03-25 20:06:25
-2025-03-25 21:06:26,293 - INFO - 成功获取 50 条B站热搜
-2025-03-25 21:06:26,301 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 21:06:26,885 - INFO - 成功获取 51 条微博热搜
-2025-03-25 21:06:26,893 - INFO - 成功保存 51 条微博热搜数据
-2025-03-25 21:06:26,896 - INFO - 热搜数据更新完成 - 2025-03-25 21:06:26
-2025-03-25 22:06:27,400 - INFO - 成功获取 50 条B站热搜
-2025-03-25 22:06:27,409 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 22:06:27,913 - INFO - 成功获取 52 条微博热搜
-2025-03-25 22:06:27,922 - INFO - 成功保存 52 条微博热搜数据
-2025-03-25 22:06:27,927 - INFO - 热搜数据更新完成 - 2025-03-25 22:06:27
-2025-03-25 23:06:28,444 - INFO - 成功获取 50 条B站热搜
-2025-03-25 23:06:28,453 - INFO - 成功保存 50 条B站热搜数据
-2025-03-25 23:06:28,990 - INFO - 成功获取 52 条微博热搜
-2025-03-25 23:06:28,996 - INFO - 成功保存 52 条微博热搜数据
-2025-03-25 23:06:28,999 - INFO - 热搜数据更新完成 - 2025-03-25 23:06:28
-2025-03-26 00:06:29,423 - INFO - 成功获取 50 条B站热搜
-2025-03-26 00:06:29,433 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 00:06:29,920 - INFO - 成功获取 50 条微博热搜
-2025-03-26 00:06:29,928 - INFO - 成功保存 50 条微博热搜数据
-2025-03-26 00:06:29,931 - INFO - 热搜数据更新完成 - 2025-03-26 00:06:29
-2025-03-26 01:07:06,741 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-26 01:07:06,772 - INFO - MongoDB连接成功
-2025-03-26 01:07:06,773 - INFO - 热搜数据采集服务启动...
-2025-03-26 01:07:07,154 - INFO - 成功获取 50 条B站热搜
-2025-03-26 01:07:07,166 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 01:07:07,677 - INFO - 成功获取 51 条微博热搜
-2025-03-26 01:07:07,683 - INFO - 成功保存 51 条微博热搜数据
-2025-03-26 01:07:07,685 - INFO - 热搜数据更新完成 - 2025-03-26 01:07:07
-2025-03-26 01:10:45,297 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-26 01:10:45,326 - INFO - MongoDB连接成功
-2025-03-26 01:10:45,327 - INFO - 热搜数据采集服务启动...
-2025-03-26 01:10:45,684 - INFO - 成功获取 50 条B站热搜
-2025-03-26 01:10:45,696 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 01:10:46,146 - INFO - 成功获取 51 条微博热搜
-2025-03-26 01:10:46,152 - INFO - 成功保存 51 条微博热搜数据
-2025-03-26 01:10:46,154 - INFO - 热搜数据更新完成 - 2025-03-26 01:10:46
-2025-03-26 01:13:46,916 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-26 01:13:46,949 - INFO - MongoDB连接成功
-2025-03-26 01:13:46,950 - INFO - 热搜数据采集服务启动...
-2025-03-26 01:13:47,356 - INFO - 成功获取 50 条B站热搜
-2025-03-26 01:13:47,367 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 01:13:47,861 - INFO - 成功获取 51 条微博热搜
-2025-03-26 01:13:47,868 - INFO - 成功保存 51 条微博热搜数据
-2025-03-26 01:13:47,870 - INFO - 热搜数据更新完成 - 2025-03-26 01:13:47
-2025-03-26 01:16:09,530 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-26 01:16:09,594 - INFO - MongoDB连接成功
-2025-03-26 01:16:09,595 - INFO - 热搜数据采集服务启动...
-2025-03-26 01:16:09,940 - INFO - 成功获取 50 条B站热搜
-2025-03-26 01:16:09,956 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 01:16:10,408 - INFO - 成功获取 50 条微博热搜
-2025-03-26 01:16:10,415 - INFO - 成功保存 50 条微博热搜数据
-2025-03-26 01:16:10,417 - INFO - 热搜数据更新完成 - 2025-03-26 01:16:10
-2025-03-26 01:21:19,639 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-26 01:21:19,668 - INFO - MongoDB连接成功
-2025-03-26 01:21:19,669 - INFO - 热搜数据采集服务启动...
-2025-03-26 01:21:20,032 - INFO - 成功获取 50 条B站热搜
-2025-03-26 01:21:20,043 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 01:21:20,529 - INFO - 成功获取 50 条微博热搜
-2025-03-26 01:21:20,535 - INFO - 成功保存 50 条微博热搜数据
-2025-03-26 01:21:20,537 - INFO - 热搜数据更新完成 - 2025-03-26 01:21:20
-2025-03-26 01:25:55,613 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-26 01:25:55,650 - INFO - MongoDB连接成功
-2025-03-26 01:25:55,651 - INFO - 热搜数据采集服务启动...
-2025-03-26 01:25:56,048 - INFO - 成功获取 50 条B站热搜
-2025-03-26 01:25:56,057 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 01:25:56,529 - INFO - 成功获取 51 条微博热搜
-2025-03-26 01:25:56,535 - INFO - 成功保存 51 条微博热搜数据
-2025-03-26 01:25:56,537 - INFO - 热搜数据更新完成 - 2025-03-26 01:25:56
-2025-03-26 02:25:57,010 - INFO - 成功获取 50 条B站热搜
-2025-03-26 02:25:57,017 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 02:25:57,509 - INFO - 成功获取 50 条微博热搜
-2025-03-26 02:25:57,516 - INFO - 成功保存 50 条微博热搜数据
-2025-03-26 02:25:57,518 - INFO - 热搜数据更新完成 - 2025-03-26 02:25:57
-2025-03-26 03:25:57,556 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fbf357515b0>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
-2025-03-26 03:25:57,562 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7fbf34705400>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
-2025-03-26 03:25:57,565 - INFO - 热搜数据更新完成 - 2025-03-26 03:25:57
-2025-03-26 04:25:58,134 - INFO - 成功获取 50 条B站热搜
-2025-03-26 04:25:58,141 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 04:25:58,689 - INFO - 成功获取 51 条微博热搜
-2025-03-26 04:25:58,697 - INFO - 成功保存 51 条微博热搜数据
-2025-03-26 04:25:58,699 - INFO - 热搜数据更新完成 - 2025-03-26 04:25:58
-2025-03-26 18:15:03,862 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-26 18:15:03,898 - INFO - MongoDB连接成功
-2025-03-26 18:15:03,898 - INFO - 热搜数据采集服务启动...
-2025-03-26 18:15:04,476 - INFO - 成功获取 50 条B站热搜
-2025-03-26 18:15:04,487 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 18:15:05,126 - INFO - 成功获取 50 条微博热搜
-2025-03-26 18:15:05,132 - INFO - 成功保存 50 条微博热搜数据
-2025-03-26 18:15:05,134 - INFO - 热搜数据更新完成 - 2025-03-26 18:15:05
-2025-03-26 19:15:05,757 - INFO - 成功获取 50 条B站热搜
-2025-03-26 19:15:05,765 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 19:15:06,409 - INFO - 成功获取 50 条微博热搜
-2025-03-26 19:15:06,418 - INFO - 成功保存 50 条微博热搜数据
-2025-03-26 19:15:06,421 - INFO - 热搜数据更新完成 - 2025-03-26 19:15:06
-2025-03-26 20:15:07,019 - INFO - 成功获取 50 条B站热搜
-2025-03-26 20:15:07,026 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 20:15:07,608 - INFO - 成功获取 50 条微博热搜
-2025-03-26 20:15:07,616 - INFO - 成功保存 50 条微博热搜数据
-2025-03-26 20:15:07,619 - INFO - 热搜数据更新完成 - 2025-03-26 20:15:07
-2025-03-26 20:36:49,730 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-2025-03-26 20:36:49,776 - INFO - MongoDB连接成功
-2025-03-26 20:36:49,776 - INFO - 热搜数据采集服务启动...
-2025-03-26 20:36:50,313 - INFO - 成功获取 50 条B站热搜
-2025-03-26 20:36:50,324 - INFO - 成功保存 50 条B站热搜数据
-2025-03-26 20:36:50,896 - INFO - 成功获取 51 条微博热搜
-2025-03-26 20:36:50,903 - INFO - 成功保存 51 条微博热搜数据
-2025-03-26 20:36:50,905 - INFO - 热搜数据更新完成 - 2025-03-26 20:36:50
+2025-03-27 12:36:00,672 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-27 12:36:00,699 - INFO - MongoDB连接成功
+2025-03-27 12:36:00,699 - INFO - 热搜数据采集服务启动...
+2025-03-27 12:36:00,784 - INFO - 成功获取 50 条B站热搜
+2025-03-27 12:36:00,793 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 12:36:01,001 - INFO - 成功获取 51 条微博热搜
+2025-03-27 12:36:01,013 - INFO - 成功保存 51 条微博热搜数据
+2025-03-27 12:36:01,015 - INFO - 热搜数据更新完成 - 2025-03-27 12:36:01
+2025-03-27 12:36:02,236 - INFO - 服务停止...
+2025-03-27 12:38:29,901 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-27 12:38:29,931 - INFO - MongoDB连接成功
+2025-03-27 12:38:29,931 - INFO - 热搜数据采集服务启动...
+2025-03-27 12:38:29,995 - INFO - 成功获取 50 条B站热搜
+2025-03-27 12:38:30,008 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 12:38:30,169 - INFO - 成功获取 51 条微博热搜
+2025-03-27 12:38:30,176 - INFO - 成功保存 51 条微博热搜数据
+2025-03-27 12:38:30,178 - INFO - 热搜数据更新完成 - 2025-03-27 12:38:30
+2025-03-27 12:47:58,117 - INFO - 服务停止...
+2025-03-27 12:49:09,210 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-27 12:49:09,243 - INFO - MongoDB连接成功
+2025-03-27 12:49:09,244 - INFO - 热搜数据采集服务启动...
+2025-03-27 12:49:09,406 - INFO - 成功获取 50 条B站热搜
+2025-03-27 12:49:09,412 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 12:49:09,609 - INFO - 成功获取 51 条微博热搜
+2025-03-27 12:49:09,615 - INFO - 成功保存 51 条微博热搜数据
+2025-03-27 12:49:09,617 - INFO - 热搜数据更新完成 - 2025-03-27 12:49:09
+2025-03-27 12:50:05,286 - INFO - 服务停止...
+2025-03-27 12:52:27,283 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-27 12:52:27,316 - INFO - MongoDB连接成功
+2025-03-27 12:52:27,316 - INFO - 热搜数据采集服务启动...
+2025-03-27 12:52:27,387 - INFO - 成功获取 50 条B站热搜
+2025-03-27 12:52:27,395 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 12:52:27,519 - INFO - 成功获取 50 条微博热搜
+2025-03-27 12:52:27,525 - INFO - 成功保存 50 条微博热搜数据
+2025-03-27 12:52:27,527 - INFO - 热搜数据更新完成 - 2025-03-27 12:52:27
+2025-03-27 13:10:41,255 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-27 13:10:41,290 - INFO - MongoDB连接成功
+2025-03-27 13:10:41,291 - INFO - 热搜数据采集服务启动...
+2025-03-27 13:10:41,369 - INFO - 成功获取 50 条B站热搜
+2025-03-27 13:10:41,376 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 13:10:41,517 - INFO - 成功获取 50 条微博热搜
+2025-03-27 13:10:41,522 - INFO - 成功保存 50 条微博热搜数据
+2025-03-27 13:10:41,525 - INFO - 热搜数据更新完成 - 2025-03-27 13:10:41
+2025-03-27 17:04:33,364 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-27 17:04:33,391 - INFO - MongoDB连接成功
+2025-03-27 17:04:33,391 - INFO - 热搜数据采集服务启动...
+2025-03-27 17:04:33,489 - INFO - 成功获取 50 条B站热搜
+2025-03-27 17:04:33,495 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 17:04:33,645 - INFO - 成功获取 52 条微博热搜
+2025-03-27 17:04:33,652 - INFO - 成功保存 52 条微博热搜数据
+2025-03-27 17:04:33,656 - INFO - 热搜数据更新完成 - 2025-03-27 17:04:33
+2025-03-27 17:13:54,286 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-27 17:13:54,314 - INFO - MongoDB连接成功
+2025-03-27 17:13:54,314 - INFO - 热搜数据采集服务启动...
+2025-03-27 17:13:54,422 - INFO - 成功获取 50 条B站热搜
+2025-03-27 17:13:54,427 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 17:13:54,616 - INFO - 成功获取 51 条微博热搜
+2025-03-27 17:13:54,622 - INFO - 成功保存 51 条微博热搜数据
+2025-03-27 17:13:54,627 - INFO - 热搜数据更新完成 - 2025-03-27 17:13:54
+2025-03-28 02:41:33,154 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-28 02:42:03,290 - ERROR - MongoDB连接失败: test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known, Timeout: 30s, Topology Description: <TopologyDescription id: 67e59bddc18debe9ded53506, topology_type: Single, servers: [<ServerDescription ('test-db-mongodb.ns-o6u0e3up.svc', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known')>]>
+2025-03-28 02:48:56,005 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-28 02:49:26,277 - ERROR - MongoDB连接失败: test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known, Timeout: 30s, Topology Description: <TopologyDescription id: 67e59d987576d62bdf9b179d, topology_type: Single, servers: [<ServerDescription ('test-db-mongodb.ns-o6u0e3up.svc', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known')>]>
+2025-03-28 02:54:02,557 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-28 02:54:32,744 - ERROR - MongoDB连接失败: test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known, Timeout: 30s, Topology Description: <TopologyDescription id: 67e59eca4f5bfdfbe2141900, topology_type: Single, servers: [<ServerDescription ('test-db-mongodb.ns-o6u0e3up.svc', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known')>]>
+2025-03-28 03:08:58,425 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-28 03:09:28,627 - ERROR - MongoDB连接失败: test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 30s, Topology Description: <TopologyDescription id: 67e5a24af168b0dc1892aa14, topology_type: Unknown, servers: [<ServerDescription ('test-db-mongodb.ns-o6u0e3up.svc', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+2025-03-28 03:10:04,384 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://root:vv7jtj7g@test-db-mongodb.ns-o6u0e3up.svc:27017
+2025-03-28 03:10:34,398 - ERROR - MongoDB连接失败: test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms), Timeout: 30.0s, Topology Description: <TopologyDescription id: 67e5a28c723b092218053959, topology_type: Unknown, servers: [<ServerDescription ('test-db-mongodb.ns-o6u0e3up.svc', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('test-db-mongodb.ns-o6u0e3up.svc:27017: [Errno -2] Name or service not known (configured timeouts: socketTimeoutMS: 30000.0ms, connectTimeoutMS: 30000.0ms)')>]>
+2025-03-27 19:57:58,056 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-03-27 19:57:58,098 - INFO - MongoDB连接成功
+2025-03-27 19:57:58,098 - INFO - 热搜数据采集服务启动...
+2025-03-27 19:57:58,419 - INFO - 成功获取 50 条B站热搜
+2025-03-27 19:57:58,432 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 19:57:58,854 - INFO - 成功获取 51 条微博热搜
+2025-03-27 19:57:58,860 - INFO - 成功保存 51 条微博热搜数据
+2025-03-27 19:57:58,862 - INFO - 热搜数据更新完成 - 2025-03-27 19:57:58
+2025-03-27 20:05:19,078 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-03-27 20:05:19,362 - INFO - MongoDB连接成功
+2025-03-27 20:05:19,363 - INFO - 热搜数据采集服务启动...
+2025-03-27 20:05:20,109 - INFO - 成功获取 50 条B站热搜
+2025-03-27 20:05:20,119 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 20:05:20,607 - INFO - 成功获取 51 条微博热搜
+2025-03-27 20:05:20,616 - INFO - 成功保存 51 条微博热搜数据
+2025-03-27 20:05:20,619 - INFO - 热搜数据更新完成 - 2025-03-27 20:05:20
+2025-03-27 20:10:48,405 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-03-27 20:10:48,449 - INFO - MongoDB连接成功
+2025-03-27 20:10:48,449 - INFO - 热搜数据采集服务启动...
+2025-03-27 20:10:48,798 - INFO - 成功获取 50 条B站热搜
+2025-03-27 20:10:48,810 - INFO - 成功保存 50 条B站热搜数据
+2025-03-27 20:10:49,212 - INFO - 成功获取 51 条微博热搜
+2025-03-27 20:10:49,218 - INFO - 成功保存 51 条微博热搜数据
+2025-03-27 20:10:49,220 - INFO - 热搜数据更新完成 - 2025-03-27 20:10:49

@@ -26,11 +26,20 @@ MONGODB_URI = os.getenv(
     '?authSource=hot_search_db'       # 认证源必须与用户所属库一致
     '&authMechanism=SCRAM-SHA-1'      # 强制指定 SHA-1 认证
     '&directConnection=true'          # 单节点模式必须添加
-    '&connectTimeoutMS=3000'          # 3秒连接超时
+    '&connectTimeoutMS=30000'         # 30秒连接超时
 )
+
+MONGODB_OPTIONS = {
+    'serverSelectionTimeoutMS': 30000,
+    'socketTimeoutMS': 30000,
+    'connectTimeoutMS': 30000,
+    'retryWrites': True,
+    'w': 'majority'
+}
+
 logging.info(f"最终使用的 MongoDB 连接字符串: {MONGODB_URI}")
 try:
-    client = MongoClient(MONGODB_URI)
+    client = MongoClient(MONGODB_URI, **MONGODB_OPTIONS)
     # 测试连接
     client.server_info()
     db = client.get_database()  # 使用URI中指定的数据库

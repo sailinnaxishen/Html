@@ -125,6 +125,7 @@
             <p>本站全部内容禁止商业使用。文本内容除另有声明外，均在<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank">
             知识共享 署名-非商业性使用-相同方式共享 3.0 中国大陆（CC BY-NC-SA 3.0 CN）
           </a>许可协议下提供，附加条款亦可能应用</p>
+          <p>本站所使用的素材均来自网络，学术研究使用，如有侵权，请联系删除</p>
           </div>
         </div>
       </div>

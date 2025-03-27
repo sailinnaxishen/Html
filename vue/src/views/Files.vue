@@ -11,7 +11,7 @@
       </div>
       <el-upload
         class="upload-btn"
-        :action="`${currentConfig.baseURL}${apiPaths.files.upload}`"
+        :http-request="customUpload"
         :on-success="handleUploadSuccess"
         :on-error="handleUploadError"
         :before-upload="beforeUpload"
@@ -105,7 +105,7 @@ import {
 } from "@element-plus/icons-vue";
 import axios from "axios";
 import dayjs from "dayjs";
-import { apiPaths, currentConfig } from '../config';
+import { apiPaths, currentConfig } from "../config";
 
 const router = useRouter();
 const loading = ref(false);
@@ -125,8 +125,14 @@ const fetchFiles = async () => {
         },
       }
     );
-    if (response.data && response.data.data) {
-      files.value = response.data.data;
+
+    if (response.data?.data) {
+      // 关键修改：解码文件名
+      files.value = response.data.data.map((file) => ({
+        ...file,
+        // 解码原始文件名（兼容双重编码情况）
+        originalname: safeDecodeURI(file.originalname),
+      }));
     }
   } catch (error) {
     ElMessage.error("获取文件列表失败");
@@ -136,10 +142,55 @@ const fetchFiles = async () => {
   }
 };
 
+// 新增安全解码函数
+const safeDecodeURI = (str) => {
+  try {
+    // 先尝试解码（处理前端编码的情况）
+    const decoded = decodeURIComponent(str);
+    // 二次检查是否需要解码（处理部分编码的情况）
+    return decoded.includes("%") ? decodeURIComponent(decoded) : decoded;
+  } catch {
+    // 解码失败时返回原始字符串
+    return str;
+  }
+};
+const customUpload = async (options) => {
+  try {
+    const formData = new FormData();
+
+    // 编码文件名（关键修复）
+    const encodedFileName = encodeURIComponent(options.file.name).replace(
+      /'/g,
+      "%27"
+    ); // 处理特殊符号兼容性
+
+    // 重构 File 对象
+    const processedFile = new File([options.file], encodedFileName, {
+      type: options.file.type,
+    });
+
+    formData.append("file", processedFile);
+
+    // 发送请求（保持使用原action地址）
+    const response = await axios.post(
+      `${currentConfig.baseURL}${apiPaths.files.upload}`, // 原action地址
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data; charset=UTF-8", // 强制指定编码
+        },
+      }
+    );
+
+    options.onSuccess(response.data);
+  } catch (error) {
+    options.onError(error);
+  }
+};
 // 上传文件前的验证
 const beforeUpload = (file) => {
   // 设置文件大小限制
-  const maxSize = 102400 * 1024 * 1024; 
+  const maxSize = 102400 * 1024 * 1024;
   const isLt50M = file.size < maxSize;
   if (!isLt50M) {
     ElMessage.error("文件大小不能超10G");
@@ -171,7 +222,10 @@ const handleUploadError = (error) => {
 // 下载文件
 const downloadFile = async (file) => {
   try {
-    window.open(`${currentConfig.baseURL}${apiPaths.files.download(file._id)}`, '_blank');
+    window.open(
+      `${currentConfig.baseURL}${apiPaths.files.download(file._id)}`,
+      "_blank"
+    );
     ElMessage.success("开始下载文件");
   } catch (error) {
     console.error("下载失败:", error);

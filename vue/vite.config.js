@@ -9,7 +9,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 export default defineConfig(({ mode }) => {
   // 加载环境变量
   const env = loadEnv(mode, process.cwd());
-  
+
   return {
     plugins: [
       vue(),
@@ -22,28 +22,24 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       host: "0.0.0.0",
-      port: 3001,
-      allowedHosts: [
-        "localhost",
-        "127.0.0.1",
-        "0.0.0.0",
-      ],
+      port: 41737,
+      allowedHosts: ["localhost", "127.0.0.1", "0.0.0.0", ".sealoshzh.site"],
       proxy: {
-        '/api': {
-          target: 'http://192.168.92.64:3000',
-          changeOrigin: true
-        }
-      }
+        "/api": {
+          target: "http://192.168.127.64:3000",
+          changeOrigin: true,
+        },
+      },
     },
-    production: {
+    preview: {
       host: "0.0.0.0",
-      port: parseInt(env.VITE_production_PORT) || 4173,
+      port: parseInt(env.VITE_production_PORT) || 3000,
       proxy: {
-        '/api': {
-          target: 'http://192.168.92.64:3000',
-          changeOrigin: true
-        }
-      }
+        "/api": {
+          target: "",
+          changeOrigin: true,
+        },
+      },
     },
     resolve: {
       alias: {
@@ -62,7 +58,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     define: {
-      'process.env': env
-    }
+      "process.env": env,
+    },
   };
 });

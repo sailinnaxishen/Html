@@ -18,6 +18,9 @@ COPY . .
 # 构建应用
 RUN npm run build
 
+# 验证构建输出
+RUN ls -la dist
+
 # 生产阶段
 FROM nginx:stable-alpine as production-stage
 

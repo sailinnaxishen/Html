@@ -1,3 +1,4 @@
+
 <template>
   <div class="monitor-page">
     <header class="header">
