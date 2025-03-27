@@ -20,6 +20,7 @@
 - Multer (文件上传)
 - NTP Client (时间同步)
 - OS Utils (系统监控)
+- Python (热搜数据采集)
 
 ## 项目结构
 
@@ -35,17 +36,25 @@ src/
 └── app.js           # 应用入口
 ```
 
-## 安装
+## 安装和运行
+
+### 方式一：Docker 部署（推荐）
+
+1. 确保已安装 Docker 和 Docker Compose
+2. 在项目根目录运行：
+```bash
+docker-compose up -d
+```
+
+### 方式二：手动部署
 
 1. 安装依赖
-
 ```bash
 npm install
 ```
 
-3. 配置环境变量
-   创建 `.env` 文件并配置以下变量：
-
+2. 配置环境变量
+创建 `.env` 文件并配置以下变量：
 ```env
 PORT=3000
 NODE_ENV=development
@@ -53,35 +62,25 @@ MONGODB_URI=mongodb://admin:123456@localhost:27017/hot_search_db
 CORS_ORIGINS=http://localhost:3000,http://localhost:8080
 ```
 
-docker 数据库配置:
-docker run -d \
- --name mongodb \
- -p 27017:27017 \
- -v mongodb_data:/data/db \
- -e MONGO_INITDB_ROOT_USERNAME=admin \
- -e MONGO_INITDB_ROOT_PASSWORD=123456 \
---restart unless-stopped \
- mongo:4.4
-创建用户：
-docker exec -it mongodb mongo -u admin -p 123456 --eval '
-db.getSiblingDB("hot_search_db").createUser({
-user: "hot_user",
-pwd: "hot_password",
-roles: [{role: "readWrite", db: "hot_search_db"}]
-})'
-安装依赖：pip3 install pymongo python-dotenv requests
-
-## 运行
-
-开发环境：
-
+3. 安装 Python 依赖
 ```bash
-npm run dev
+sudo apt-get update && sudo apt-get install -y python3-pip python3-venv
+cd node && python3 -m venv venv
+source venv/bin/activate
+pip install requests pymongo python-dotenv
 ```
 
-生产环境：
-
+4. 初始化数据库
 ```bash
+python3 init_db.py
+```
+
+5. 启动服务
+```bash
+# 启动热搜采集脚本
+python3 hot_search.py
+
+# 启动 Node.js 服务器
 npm start
 ```
 
@@ -117,8 +116,6 @@ npm start
 - port: 服务器端口
 - env: 运行环境
 - cors: 跨域配置
-  默认 3000 端口，需要可自行修改.env 配置
-  跨域默认支持 0.0.0.0:3000 以及 localhost:3000 等开发调试环境，生产环境按需调整
 
 ### 数据库配置
 
@@ -173,31 +170,4 @@ npm start
 2. 文件上传目录会自动创建
 3. 生产环境部署时注意修改 CORS 配置
 4. 建议使用 PM2 进行进程管理
-   sudo apt-get update && sudo apt-get install -y python3-pip
-
-   sudo apt-get install -y python3-venv
-
-   cd node && python3 -m venv venv
-
-   cd node && source venv/bin/activate && pip install requests pymongo python-dotenv
-   source venv/bin/activate && pip install requests pymongo python-dotenv
-
-   pip3 install requests pymongo python-dotenv
-
-安装 Python 虚拟环境工具：
-sudo apt-get install -y python3-venv
-Run
-创建虚拟环境：
-cd node
-python3 -m venv venv
-激活虚拟环境并安装必要的包：
-source venv/bin/activate
-pip install requests pymongo python-dotenv
-初始化数据库：
-python3 init_db.py
-运行热搜采集脚本：
-python3 hot_search.py
-每次要运行脚本时，需要先确保在虚拟环境中：
-cd node
-source venv/bin/activate
-python3 hot_search.py
+5. 热搜数据采集需要 Python 环境支持

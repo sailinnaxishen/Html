@@ -1,182 +1,164 @@
-# 全栈项目
+# 个人主页系统
 
-这是一个使用 Node.js 作为后端、Vue.js 作为前端的全栈项目。
+一个基于 Vue 3 + Node.js + MongoDB 的现代化个人主页系统，提供文件管理、系统监控、热搜数据等功能。
 
 ## 项目结构
 
 ```
--Html/
-├── docker-compose.yml    # Docker 编排配置
-├── mongo-init.js        # MongoDB 初始化脚本
-├── node/               # Node.js 后端项目
-│   ├── Dockerfile     # 后端 Docker 配置
-│   └──|src/
-│      ├── config/          # 配置文件
-│      ├── controllers/     # 控制器
-│      ├── middlewares/     # 中间件
-│      ├── models/          # 数据模型
-│      ├── routes/          # 路由
-│      ├── services/        # 业务逻辑
-│      ├── utils/           # 工具函数
-│      └── app.js           # 应用入口
-└── vue/                # Vue.js 前端项目
-    ├── Dockerfile     # 前端 Docker 配置
-    └──src/
-       ├── assets/          # 静态资源
-       ├── components/      # 公共组件
-       ├── config/         # 配置文件
-       ├── router/         # 路由配置
-       ├── services/       # API 服务
-       ├── styles/         # 全局样式
-       ├── utils/          # 工具函数
-       └── views/          # 页面组件
-           ├── Home.vue    # 首页
-           ├── Files.vue   # 网盘页面
-           └── Monitor.vue # 监控页面
+.
+├── node/           # Node.js 后端服务
+├── vue/            # Vue 3 前端应用
+├── docker-compose.yml  # Docker 编排配置
+└── mongo-init.js   # MongoDB 初始化脚本
 ```
 
-## 技术栈
+## 功能特点
 
-### 后端
-- Node.js
-- Express.js
-- MongoDB (Docker)
-- Mongoose
+- 文件管理系统
+- 实时系统监控
+- 热搜数据展示
+- 时间同步服务
+- 响应式设计
+- 暗黑主题支持
 
-### 前端
-- Vue.js
-- Vite
-- Element Plus
-- Axios
+## 快速开始
 
-## 部署方式
+### 环境要求
 
-### 方式一：Docker 部署（推荐）
+- Docker >= 20.10.0
+- Docker Compose >= 2.0.0
 
-使用 Docker Compose 一键部署整个项目：
+### Docker 部署
 
-1. 确保已安装 Docker 和 Docker Compose
-2. 在项目根目录下运行：
- docker compose down -v #暂停容器并删除缓存
- docker compose up --build -d #构建容器
+1. 克隆项目
 ```bash
-# 查看 MongoDB 日志
-docker logs html-mongodb-1
-
-# 查看后端日志
-docker logs html-backend-1
-
-# 查看前端日志
-docker logs html-frontend-1
-
+git clone https://github.com/sailinnaxishen/Html.git
+cd Html
 ```
 
-服务访问地址：
+2. 启动服务
+```bash
+docker-compose up -d
+```
+
+3. 访问应用
 - 前端：http://localhost:41737
 - 后端：http://localhost:3000
-- MongoDB：localhost:27018
 
-### 方式二：手动部署
+### 手动部署
 
-#### 数据库配置
-项目使用 MongoDB 作为数据库，通过 Docker 运行：
-```bash
-docker run -d \
---name mongodb \
--p 27017:27017 \
--v mongodb_data:/data/db \
--e MONGO_INITDB_ROOT_USERNAME=admin \
--e MONGO_INITDB_ROOT_PASSWORD=123456 \ 
---restart unless-stopped \
-mongo:4.4
-```
+请参考各子目录的 README.md 文件：
+- [前端部署说明](vue/README.md)
+- [后端部署说明](node/README.md)
 
-创建用户：
-```bash
-docker exec -it mongodb mongo -u admin -p 123456 --eval '
-db.getSiblingDB("hot_search_db").createUser({
-  user: "hot_user",
-  pwd: "hot_password",
-  roles: [{role: "readWrite", db: "hot_search_db"}]
-})'
-```
+## 开发说明
 
-数据库连接信息：
-- 主机：localhost
-- 端口：27017
-- 用户名：admin
-- 密码：123456
-- 数据库名：hot_search_db
+### 目录说明
 
-#### 后端启动
+- `node/`: Node.js 后端服务，提供 API 接口
+- `vue/`: Vue 3 前端应用，提供用户界面
+- `mongo-init.js`: MongoDB 数据库初始化脚本
 
-1. 进入后端目录：
+### 环境变量
+
+主要环境变量配置：
+- `VITE_API_BASE_URL`: 前端 API 地址
+- `MONGODB_URI`: MongoDB 连接地址
+- `PORT`: 后端服务端口
+- `CORS_ORIGINS`: 允许跨域的域名
+
+### 开发流程
+
+1. 启动后端服务
 ```bash
 cd node
-```
-
-2. 安装依赖：
-```bash
 npm install
+npm run dev
 ```
 
-3. 启动服务：
+2. 启动前端服务
 ```bash
+cd vue
+npm install
+npm run dev
+```
+
+## 部署说明
+
+### Docker 部署
+
+使用 Docker Compose 可以一键部署整个系统：
+
+```bash
+docker-compose up -d
+```
+
+这将启动：
+- 前端服务（端口：41737）
+- 后端服务（端口：3000）
+- MongoDB 数据库（端口：27018）
+- 热搜数据采集服务
+
+### 手动部署
+
+1. 部署后端
+```bash
+cd node
+npm install
+npm run build
 npm start
 ```
 
-#### 前端启动
-
-1. 进入前端目录：
+2. 部署前端
 ```bash
 cd vue
-```
-
-2. 安装依赖：
-```bash
 npm install
-```
-
-3. 启动vue服务器：
-```bash
+npm run build
 npm run preview
 ```
 
-## 环境变量配置
+## 维护说明
 
-### 后端环境变量 (.env)
-```
-# 服务器配置
-PORT=3000
-NODE_ENV=development
+### 日志查看
 
-# CORS配置
-CORS_ORIGINS=http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000,http://192.168.92.64:5173,http://192.168.92.64:3001
+```bash
+# 查看所有服务日志
+docker-compose logs -f
 
-# 数据库配置
-MONGODB_URI=mongodb://hot_user:hot_password@localhost:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&directConnection=true&connectTimeoutMS=3000
-
-# 文件上传配置
-UPLOAD_DIR=uploads
+# 查看特定服务日志
+docker-compose logs -f frontend
+docker-compose logs -f backend
+docker-compose logs -f mongodb
 ```
 
-### 前端环境变量 (.env)
+### 服务重启
+
+```bash
+# 重启所有服务
+docker-compose restart
+
+# 重启特定服务
+docker-compose restart frontend
+docker-compose restart backend
 ```
-VITE_API_URL=VITE_API_BASE_URL
+
+### 数据备份
+
+MongoDB 数据存储在 Docker volume 中，可以通过以下命令备份：
+
+```bash
+# 备份 MongoDB 数据
+docker-compose exec mongodb mongodump --out /backup
 ```
 
-## 开发指南
+## 贡献指南
 
-1. 确保已安装 Node.js 和 Docker
-2. 选择部署方式（Docker 或手动部署）
-3. 按照对应方式的步骤进行部署
-4. 访问 http://localhost:41737 查看前端页面
-5. 修改背景图在/vue/App.vue/40lines
-## 注意事项
+1. Fork 项目
+2. 创建特性分支
+3. 提交更改
+4. 推送到分支
+5. 创建 Pull Request
 
-- 确保 MongoDB 容器正常运行
-- 检查环境变量配置是否正确
-- 确保端口未被占用
-- Docker 部署时，MongoDB 端口映射为 27018
-- 上传的文件会持久化存储在 Docker volume 中
-- 修改vue项目的文件后请务必清除vite构建缓存重新构建再运行dovker的构建
+## 许可证
+
+MIT License

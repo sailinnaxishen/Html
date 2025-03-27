@@ -47,26 +47,40 @@
 
 ## 快速开始
 
-### 环境要求
+### 方式一：Docker 部署（推荐）
+
+1. 确保已安装 Docker 和 Docker Compose
+2. 在项目根目录运行：
+```bash
+docker-compose up -d
+```
+
+### 方式二：手动部署
+
+#### 环境要求
 - Node.js >= 16.0.0
 - npm >= 7.0.0
 
-### 安装依赖
+#### 安装依赖
 ```bash
 npm install
 ```
-### 开发环境运行
+
+#### 开发环境运行
 ```bash
 npm run dev
 ```
-### 生产环境构建
+
+#### 生产环境构建
 ```bash
 npm run build
 ```
-### 生产环境
+
+#### 生产环境预览
 ```bash
-npn run preview
+npm run preview
 ```
+
 ## 项目结构
 
 ```
@@ -91,21 +105,37 @@ src/
 - 生产环境：`.env.preview`
 
 ### API 配置
-- 默认api：.env.development of `VITE_API_BASE_URL`
-- 超时时间：5000ms
+- 默认 API：通过环境变量 `VITE_API_BASE_URL` 配置
+- 超时时间：10000ms
 - 请求头：JSON 格式
 
 ### 主题配置
 - 主色调：`--primary-color`
 - 次色调：`--secondary-color`
 - 强调色：`--accent-color`
-- 背景图在App.vue第40行进行改动
+- 背景图在 App.vue 第 40 行进行改动
+
 ## 使用说明
-清除构建信息：
-- rm -rf dist
-- rm -rf node_modules/.vite
-重新构建
-- npm run build
+
+### 开发环境
+1. 克隆项目
+2. 安装依赖：`npm install`
+3. 启动开发服务器：`npm run dev`
+
+### 生产环境
+1. 构建项目：`npm run build`
+2. 预览构建结果：`npm run preview`
+
+### 清理构建
+```bash
+# 清除构建信息
+rm -rf dist
+rm -rf node_modules/.vite
+
+# 重新构建
+npm run build
+```
+
 ### 网盘使用
 1. 点击首页的网盘入口或导航到 `/files` 路径
 2. 点击"上传文件"按钮选择要上传的文件
