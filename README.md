@@ -38,7 +38,7 @@ cd Html
 
 2. 启动服务
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 3. 访问应用
@@ -123,23 +123,23 @@ npm run preview
 
 ```bash
 # 查看所有服务日志
-docker-compose logs -f
+docker compose logs -f
 
 # 查看特定服务日志
-docker-compose logs -f frontend
-docker-compose logs -f backend
-docker-compose logs -f mongodb
+docker compose logs -f frontend
+docker compose logs -f backend
+docker compose logs -f mongodb
 ```
 
 ### 服务重启
 
 ```bash
 # 重启所有服务
-docker-compose restart
+docker compose restart
 
 # 重启特定服务
-docker-compose restart frontend
-docker-compose restart backend
+docker compose restart frontend
+docker compose restart backend
 ```
 
 ### 数据备份
@@ -148,7 +148,7 @@ MongoDB 数据存储在 Docker volume 中，可以通过以下命令备份：
 
 ```bash
 # 备份 MongoDB 数据
-docker-compose exec mongodb mongodump --out /backup
+docker compose exec mongodb mongodump --out /backup
 ```
 
 ## 贡献指南

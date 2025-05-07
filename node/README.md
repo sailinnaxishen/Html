@@ -43,7 +43,7 @@ src/
 1. 确保已安装 Docker 和 Docker Compose
 2. 在项目根目录运行：
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 方式二：手动部署
