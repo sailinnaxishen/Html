@@ -90,7 +90,7 @@ npm run dev
 使用 Docker Compose 可以一键部署整个系统：
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 这将启动：

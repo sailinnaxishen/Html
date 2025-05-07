@@ -12,7 +12,7 @@
       <div class="header-search">
         <el-input
           v-model="search"
-          placeholder="搜索文件名（支持模糊匹配）"
+          placeholder="搜索"
           clearable
           @keyup.enter="onSearch"
           @clear="onClearSearch"
@@ -29,6 +29,7 @@
         :on-success="handleUploadSuccess"
         :on-error="handleUploadError"
         :before-upload="beforeUpload"
+        :filter-multiple="true"
         multiple
       >
         <el-button
@@ -42,7 +43,7 @@
     <main class="main-content">
       <el-table
         v-loading="loading"
-        :data="files"
+        :data="displayFiles"
         style="width: 100%"
         :empty-text="loading ? '加载中...' : '暂无文件'"
       >
@@ -77,9 +78,26 @@
         </el-table-column>
         <el-table-column
           prop="mimetype"
-          label="类型"
           width="120"
-        />
+        >
+          <template #header>
+            <el-popover
+              placement="bottom"
+              width="220"
+              trigger="click"
+              v-model:visible="typePopoverVisible"
+            >
+              <el-checkbox-group v-model="filteredType" @change="onTypeFilterChange">
+                <el-checkbox v-for="item in typeFilters" :key="item.value" :label="item.value">
+                  {{ item.text }}
+                </el-checkbox>
+              </el-checkbox-group>
+              <template #reference>
+                <span style="cursor:pointer; color:#409EFF;">类型 <el-icon style="vertical-align: middle;"><ArrowDown /></el-icon></span>
+              </template>
+            </el-popover>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="createdAt"
           label="上传时间"
@@ -116,7 +134,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -126,6 +144,7 @@ import {
   Delete,
   Document,
   Search,
+  ArrowDown,
 } from "@element-plus/icons-vue";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -136,6 +155,24 @@ const loading = ref(false);
 const files = ref([]);
 const search = ref("");
 let searchTimeout = null;
+
+// 筛选选项
+const typeFilters = [
+  { text: "全部", value: "" },
+  { text: "压缩包", value: "archive" },
+  { text: "图片", value: "image/" },
+  { text: "文本", value: "text/plain" },
+  { text: "视频", value: "video/" },
+  { text: "音频", value: "audio/" },
+  { text: "文档", value: "application/msword" },
+  { text: "可执行文件", value: "application/x-msdownload" },
+  // 可根据实际类型补充
+];
+const archiveExts = ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "tar.gz", "tar.bz2", "tar.xz"];
+// 当前筛选的类型
+const filteredType = ref([""]); // 默认选中"全部"
+const typePopoverVisible = ref(false);
+const typeChecked = ref({});
 
 // 获取文件列表
 const fetchFiles = async () => {
@@ -223,7 +260,6 @@ const beforeUpload = (file) => {
 // 上传成功回调
 const handleUploadSuccess = (response) => {
   if (!response) {
-    ElMessage.error("上传返回数据为空");
     return;
   }
   if (response.code === 201) {
@@ -366,8 +402,73 @@ const formatNovelInfo = (info) => {
   `;
 };
 
+const displayFiles = computed(() => {
+  if (!filteredType.value.length || filteredType.value.includes("")) return files.value;
+  return files.value.filter(row => {
+    return filteredType.value.some(type => {
+      if (type === "archive") {
+        return archiveExts.some(ext => row.originalname && row.originalname.toLowerCase().endsWith('.' + ext));
+      } else {
+        return row.mimetype && row.mimetype.includes(type);
+      }
+    });
+  });
+});
+
+const onTypeFilterChange = (val) => {
+  // 更新 typeChecked
+  Object.keys(typeChecked.value).forEach(key => {
+    typeChecked.value[key] = val.includes(key) ? 1 : 0;
+  });
+
+  // 除"全部"外所有选项
+  const nonAllKeys = Object.keys(typeChecked.value).filter(key => key !== "");
+  const allChecked = nonAllKeys.every(key => typeChecked.value[key] === 1);
+
+  if (allChecked) {
+    // 只选中"全部"，其它全部为0
+    filteredType.value = [""];
+    Object.keys(typeChecked.value).forEach(key => {
+      typeChecked.value[key] = key === "" ? 1 : 0;
+    });
+    return;
+  }
+
+  // 只选了"全部"
+  if (val.length === 1 && val[0] === "") {
+    filteredType.value = [""];
+    Object.keys(typeChecked.value).forEach(key => {
+      typeChecked.value[key] = key === "" ? 1 : 0;
+    });
+    return;
+  }
+
+  // 选了"全部"以外的类型
+  if (val.includes("") && val.length > 1) {
+    filteredType.value = val.filter(v => v !== "");
+    typeChecked.value[""] = 0;
+    return;
+  }
+
+  // 没有任何选项时，回到"全部"
+  if (val.length === 0) {
+    filteredType.value = [""];
+    Object.keys(typeChecked.value).forEach(key => {
+      typeChecked.value[key] = key === "" ? 1 : 0;
+    });
+    return;
+  }
+
+  // 正常多选
+  filteredType.value = val;
+};
+
 onMounted(() => {
   fetchFiles();
+  // 初始化所有选项为未选中，"全部"为选中
+  typeFilters.forEach(item => {
+    typeChecked.value[item.value] = item.value === "" ? 1 : 0;
+  });
 });
 </script>
 
