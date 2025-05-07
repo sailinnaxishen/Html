@@ -9,6 +9,20 @@
         >
         <h1>个人网盘</h1>
       </div>
+      <div class="header-search">
+        <el-input
+          v-model="search"
+          placeholder="搜索文件名（支持模糊匹配）"
+          clearable
+          @keyup.enter="onSearch"
+          @clear="onClearSearch"
+          style="width: 260px; margin-right: 8px;"
+        >
+          <template #append>
+            <el-button :icon="Search" @click="onSearch" />
+          </template>
+        </el-input>
+      </div>
       <el-upload
         class="upload-btn"
         :http-request="customUpload"
@@ -39,7 +53,16 @@
           <template #default="{ row }">
             <div class="file-name">
               <el-icon><Document /></el-icon>
-              <span>{{ row.originalname }}</span>
+              <el-tooltip
+                v-if="row.mimetype === 'text/plain'"
+                :content="row.novelInfo ? formatNovelInfo(row.novelInfo) : '此文件未获取信息'"
+                raw-content
+                placement="top"
+                effect="dark"
+              >
+                <span style="cursor: pointer;">{{ row.originalname }}</span>
+              </el-tooltip>
+              <span v-else>{{ row.originalname }}</span>
             </div>
           </template>
         </el-table-column>
@@ -93,7 +116,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
 import {
@@ -102,6 +125,7 @@ import {
   Download,
   Delete,
   Document,
+  Search,
 } from "@element-plus/icons-vue";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -110,6 +134,8 @@ import { apiPaths, currentConfig } from "../config";
 const router = useRouter();
 const loading = ref(false);
 const files = ref([]);
+const search = ref("");
+let searchTimeout = null;
 
 // 获取文件列表
 const fetchFiles = async () => {
@@ -157,27 +183,22 @@ const safeDecodeURI = (str) => {
 const customUpload = async (options) => {
   try {
     const formData = new FormData();
-
-    // 编码文件名（关键修复）
-    const encodedFileName = encodeURIComponent(options.file.name).replace(
-      /'/g,
-      "%27"
-    ); // 处理特殊符号兼容性
-
-    // 重构 File 对象
-    const processedFile = new File([options.file], encodedFileName, {
-      type: options.file.type,
-    });
+    
+    // 直接使用原始文件名，仅处理特殊符号兼容性
+    const processedFile = new File(
+      [options.file], 
+      options.file.name.replace(/'/g, "%27"), // 保留单引号处理
+      { type: options.file.type }
+    );
 
     formData.append("file", processedFile);
 
-    // 发送请求（保持使用原action地址）
     const response = await axios.post(
-      `${currentConfig.baseURL}${apiPaths.files.upload}`, // 原action地址
+      `${currentConfig.baseURL}${apiPaths.files.upload}`,
       formData,
       {
         headers: {
-          "Content-Type": "multipart/form-data; charset=UTF-8", // 强制指定编码
+          "Content-Type": "multipart/form-data; charset=UTF-8",
         },
       }
     );
@@ -201,6 +222,10 @@ const beforeUpload = (file) => {
 
 // 上传成功回调
 const handleUploadSuccess = (response) => {
+  if (!response) {
+    ElMessage.error("上传返回数据为空");
+    return;
+  }
   if (response.code === 201) {
     ElMessage.success(response.message || "文件上传成功");
     fetchFiles();
@@ -276,6 +301,69 @@ const formatFileSize = (size) => {
 // 格式化日期
 const formatDate = (date) => {
   return dayjs(date).format("YYYY-MM-DD HH:mm:ss");
+};
+
+// 搜索文件
+const searchFiles = async (keyword) => {
+  if (!keyword) {
+    fetchFiles();
+    return;
+  }
+  loading.value = true;
+  try {
+    // 这里 params: { q: keyword }，不要 encodeURIComponent
+    const response = await axios.get(
+      `${currentConfig.baseURL}${apiPaths.files.search}`,
+      {
+        params: { q: keyword },
+        timeout: 5000,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.data?.data) {
+      files.value = response.data.data.map((file) => ({
+        ...file,
+        originalname: safeDecodeURI(file.originalname),
+      }));
+    } else {
+      files.value = [];
+    }
+  } catch (error) {
+    ElMessage.error("搜索失败");
+    files.value = [];
+  } finally {
+    loading.value = false;
+  }
+};
+
+// 搜索按钮/回车触发
+const onSearch = () => {
+  if (searchTimeout) clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    searchFiles(search.value.trim());
+  }, 300);
+};
+// 清空搜索
+const onClearSearch = () => {
+  search.value = "";
+  fetchFiles();
+};
+
+const formatNovelInfo = (info) => {
+  if (!info) return '';
+  return `
+    <div>
+      <div><b>小说名：</b>${info.name || ''}</div>
+      <div><b>作者：</b>${info.author || ''}</div>
+      <div><b>主角1：</b>${info.P1 || ''}</div>
+      <div><b>主角2：</b>${info.P2 || ''}</div>
+      <div><b>标签：</b>${info.tag || ''}</div>
+      <div><b>简介：</b>${info.about || ''}</div>
+    </div>
+  `;
 };
 
 onMounted(() => {
@@ -399,6 +487,43 @@ onMounted(() => {
 
   .el-icon {
     color: var(--primary-color);
+  }
+}
+
+.header-search {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  padding: 0.25rem 0.75rem;
+  margin-left: 1rem;
+  transition: box-shadow 0.2s;
+  &:focus-within {
+    box-shadow: 0 4px 16px var(--primary-color);
+  }
+  .el-input {
+    flex: 1;
+    font-size: 1rem;
+    background: transparent;
+    .el-input__inner {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      color: var(--text-color);
+    }
+    .el-input-group__append {
+      background: transparent;
+      border: none;
+      .el-button {
+        background: var(--primary-color);
+        color: #fff;
+        border-radius: 0 6px 6px 0;
+        &:hover {
+          background: var(--secondary-color);
+        }
+      }
+    }
   }
 }
 

@@ -24,7 +24,7 @@ module.exports = {
 
   // 数据库配置
   database: {
-    uri: process.env.MONGODB_URI || "mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1",
+    uri: process.env.MONGODB_URI,
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,

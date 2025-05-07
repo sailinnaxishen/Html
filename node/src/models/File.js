@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const iconv = require('iconv-lite');
 
 // 定义文件Schema
 const FileSchema = new mongoose.Schema({
@@ -40,6 +41,11 @@ const FileSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now,
+  },
+  // 小说信息
+  novelInfo: {
+    type: Object,
+    default: null,
   },
 });
 

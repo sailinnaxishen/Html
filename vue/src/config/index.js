@@ -32,7 +32,8 @@ export const apiPaths = {
     upload: '/api/files/upload',
     list: '/api/files',
     download: (id) => `/api/files/download/${id}`,
-    delete: (id) => `/api/files/${id}`
+    delete: (id) => `/api/files/${id}`,
+    search: '/api/files/search'
   },
   monitor: {
     systemStats: '/api/monitor/system-stats'
