@@ -16,7 +16,10 @@ const connectDB = require("./config/database");
 const app = express();
 
 // 确保上传目录存在
-const uploadDir = path.join(__dirname, "../uploads");
+const uploadDir = path.isAbsolute(config.upload.uploadDir)
+  ? config.upload.uploadDir
+  : path.join(__dirname, "../../", config.upload.uploadDir || "uploads");
+console.log("fileRoutes.js uploadDir:", uploadDir);
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
@@ -29,7 +32,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // 静态文件服务（仅用于文件下载）
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/uploads", express.static(uploadDir));
 // API路由
 app.use("/api/files", fileRoutes);
 app.use("/api/time", timeRoutes);

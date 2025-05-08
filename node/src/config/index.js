@@ -38,9 +38,9 @@ module.exports = {
 
   // 文件上传配置
   upload: {
-    maxSize: process.env.MAX_FILE_SIZE || 10 * 1024 * 1024, // 默认10MB
+    uploadDir: process.env.UPLOAD_DIR,
+    maxSize: 1024 * 1024 * 1024 * 10, // 10GB
     allowedTypes: ["*/*"],
-    uploadDir: process.env.UPLOAD_DIR || "uploads",
   },
 
   // NTP配置

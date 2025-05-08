@@ -29,11 +29,14 @@ export const apiConfig = {
 // API路径配置
 export const apiPaths = {
   files: {
-    upload: '/api/files/upload',
-    list: '/api/files',
-    download: (id) => `/api/files/download/${id}`,
+    list: "/api/files",
+    upload: "/api/files/upload",
     delete: (id) => `/api/files/${id}`,
-    search: '/api/files/search'
+    download: (id) => `/api/files/download/${id}`,
+    search: "/api/files/search",
+    uploadChunk: "/api/files/upload-chunk",
+    mergeChunks: "/api/files/merge-chunks",
+    uploadedChunks: "/api/files/uploaded-chunks",
   },
   monitor: {
     systemStats: '/api/monitor/system-stats'

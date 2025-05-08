@@ -47,6 +47,11 @@ const FileSchema = new mongoose.Schema({
     type: Object,
     default: null,
   },
+  md5: {
+    type: String,
+    required: true,
+    index: true,
+  },
 });
 
 // 更新时间中间件

@@ -12,7 +12,9 @@ const jschardet = require('jschardet'); // 需要安装
 // 配置文件上传
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const uploadDir = path.join(__dirname, "../../", config.upload.uploadDir);
+    const uploadDir = config.upload.uploadDir && path.isAbsolute(config.upload.uploadDir || "uploads")
+      ? config.upload.uploadDir
+      : path.join(__dirname, "../../", config.upload.uploadDir);
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
@@ -29,6 +31,14 @@ const upload = multer({
     fileSize: config.upload.maxSize
   }
 });
+
+// ========== 断点续传相关接口 ==========
+const baseUploadDir = path.isAbsolute(config.upload.uploadDir)
+  ? config.upload.uploadDir
+  : path.join(__dirname, '../../', config.upload.uploadDir);
+const chunkUploadDir = path.join(baseUploadDir, 'chunks');
+const finalUploadDir = baseUploadDir;
+const chunkMulter = multer({ dest: chunkUploadDir });
 
 // 获取文件列表
 router.get("/", async (req, res) => {
@@ -238,5 +248,109 @@ router.get("/search", async (req, res) => {
     });
   }
 });
+
+// 上传分片
+router.post('/upload-chunk', chunkMulter.single('chunk'), async (req, res) => {
+  const { fileHash, chunkIndex } = req.body;
+  if (!fileHash || chunkIndex === undefined) {
+    return res.status(400).json({ code: 400, message: '缺少fileHash或chunkIndex' });
+  }
+  const chunkDir = path.join(chunkUploadDir, fileHash);
+  if (!fs.existsSync(chunkDir)) fs.mkdirSync(chunkDir, { recursive: true });
+  const chunkPath = path.join(chunkDir, chunkIndex);
+  try {
+    await fs.promises.rename(req.file.path, chunkPath);
+    res.json({ code: 200, message: '分片上传成功', chunkIndex });
+  } catch (err) {
+    res.status(500).json({ code: 500, message: '分片保存失败', error: err.message });
+  }
+});
+
+// 查询已上传分片
+router.get('/uploaded-chunks', async (req, res) => {
+  const { fileHash } = req.query;
+  if (!fileHash) return res.status(400).json({ code: 400, message: '缺少fileHash' });
+  const chunkDir = path.join(chunkUploadDir, fileHash);
+  let uploaded = [];
+  if (fs.existsSync(chunkDir)) {
+    uploaded = fs.readdirSync(chunkDir).filter(f => !isNaN(Number(f)));
+  }
+  res.json({ code: 200, uploaded: uploaded.map(Number) });
+});
+
+// 合并分片
+router.post('/merge-chunks', async (req, res) => {
+  const { fileHash, totalChunks, originalname, mimetype, size } = req.body;
+  if (!fileHash || !totalChunks || !originalname) {
+    return res.status(400).json({ code: 400, message: '缺少参数' });
+  }
+  // 查重：如已存在相同md5文件，直接返回
+  const exist = await File.findOne({ md5: fileHash });
+  if (exist) {
+    return res.json({ code: 200, message: '文件已存在', data: exist });
+  }
+  const chunkDir = path.join(chunkUploadDir, fileHash);
+  const finalPath = path.join(finalUploadDir, `${Date.now()}-${originalname}`);
+  try {
+    const writeStream = fs.createWriteStream(finalPath);
+    let i = 0;
+    function pipeNext() {
+      if (i >= totalChunks) {
+        writeStream.end();
+        return;
+      }
+      const chunkPath = path.join(chunkDir, String(i));
+      if (!fs.existsSync(chunkPath)) {
+        writeStream.destroy();
+        return res.status(400).json({ code: 400, message: `缺少分片${i}` });
+      }
+      const readStream = fs.createReadStream(chunkPath);
+      readStream.pipe(writeStream, { end: false });
+      readStream.on('end', () => {
+        i++;
+        pipeNext();
+      });
+      readStream.on('error', (err) => {
+        writeStream.destroy();
+        return res.status(500).json({ code: 500, message: '读取分片失败', error: err.message });
+      });
+    }
+    writeStream.on('finish', async () => {
+      // 清理分片
+      fs.rmSync(chunkDir, { recursive: true, force: true });
+      // 存入数据库
+      const file = new File({
+        filename: path.basename(finalPath),
+        originalname,
+        mimetype,
+        size,
+        path: finalPath,
+        novelInfo: null,
+        md5: fileHash,
+      });
+      await file.save();
+      res.json({ code: 201, message: '文件合并成功', data: file });
+    });
+    writeStream.on('error', (err) => {
+      return res.status(500).json({ code: 500, message: '写入失败', error: err.message });
+    });
+    pipeNext();
+  } catch (err) {
+    res.status(500).json({ code: 500, message: '合并失败', error: err.message });
+  }
+});
+
+// 查询md5是否已存在
+router.get('/check-md5', async (req, res) => {
+  const { md5 } = req.query;
+  if (!md5) return res.status(400).json({ code: 400, message: '缺少md5' });
+  const exist = await File.findOne({ md5 });
+  if (exist) {
+    return res.json({ code: 200, exists: true, data: exist });
+  }
+  res.json({ code: 200, exists: false });
+});
+
+console.log("config.upload.uploadDir:", config.upload.uploadDir);
 
 module.exports = router;

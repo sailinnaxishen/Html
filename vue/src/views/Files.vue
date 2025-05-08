@@ -25,18 +25,30 @@
       </div>
       <el-upload
         class="upload-btn"
-        :http-request="customUpload"
+        :http-request="customChunkUpload"
         :on-success="handleUploadSuccess"
         :on-error="handleUploadError"
         :before-upload="beforeUpload"
         :filter-multiple="true"
         multiple
+        v-model:file-list="uploadFileList"
+        :show-file-list="false"
+        ref="uploadRef"
       >
         <el-button
           type="primary"
           :icon="Upload"
           >上传文件</el-button
         >
+        <template #file-list>
+          <transition-group name="fade-upload-list" tag="ul" class="el-upload-list el-upload-list--text custom-upload-list">
+            <li v-for="(file, idx) in limitedUploadList" :key="file.uid" class="el-upload-list__item">
+              <span class="el-upload-list__item-name">{{ file.name }}</span>
+              <el-progress v-if="file.status === 'uploading'" :percentage="file.percentage" :status="file.percentage === 100 ? 'success' : 'active'" style="width: 100px; display: inline-block; margin-left: 8px;" />
+              <el-button size="mini" type="danger" @click="removeUploadFile(file)">删除</el-button>
+            </li>
+          </transition-group>
+        </template>
       </el-upload>
     </header>
 
@@ -46,6 +58,7 @@
         :data="displayFiles"
         style="width: 100%"
         :empty-text="loading ? '加载中...' : '暂无文件'"
+        height="600px"
       >
         <el-table-column
           prop="filename"
@@ -129,7 +142,12 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-progress v-if="uploadProgress > 0" :percentage="uploadProgress" :status="uploadProgress === 100 ? 'success' : 'active'" style="margin-top: 10px;" />
+      <div v-if="uploadStatus" style="color: #409EFF; margin-bottom: 10px;">{{ uploadStatus }}</div>
     </main>
+    <div v-if="uploadProgress > 0 && uploadProgress < 100" class="global-upload-progress" :style="{ background: themeBgColor }">
+      <el-progress :percentage="uploadProgress" :status="uploadProgress === 100 ? 'success' : 'active'" show-text />
+    </div>
   </div>
 </template>
 
@@ -149,6 +167,9 @@ import {
 import axios from "axios";
 import dayjs from "dayjs";
 import { apiPaths, currentConfig } from "../config";
+import SparkMD5 from "spark-md5";
+import path from "path";
+import fs from "fs";
 
 const router = useRouter();
 const loading = ref(false);
@@ -173,6 +194,25 @@ const archiveExts = ["zip", "rar", "7z", "tar", "gz", "bz2", "xz", "tar.gz", "ta
 const filteredType = ref([""]); // 默认选中"全部"
 const typePopoverVisible = ref(false);
 const typeChecked = ref({});
+
+const uploadProgress = ref(0);
+const uploadStatus = ref("");
+
+// 分片上传参数
+const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB
+
+const uploadFileList = ref([]);
+const uploadRef = ref();
+
+const limitedUploadList = computed(() => {
+  // 只显示最新的2个
+  return uploadFileList.value.slice(-2);
+});
+
+function removeUploadFile(file) {
+  // 触发el-upload的删除
+  uploadRef.value.handleRemove(file);
+}
 
 // 获取文件列表
 const fetchFiles = async () => {
@@ -217,34 +257,119 @@ const safeDecodeURI = (str) => {
     return str;
   }
 };
-const customUpload = async (options) => {
+
+// 分片上传主流程
+const customChunkUpload = async (options) => {
+  uploadProgress.value = 0;
+  uploadStatus.value = "";
+  const file = options.file;
+  // 1. 计算hash
+  const fileHash = await calcFileHash(file);
+  console.log('fileHash:', fileHash);
+
+  // 1.5 秒传：上传前先查md5
   try {
+    const { data } = await axios.get(`${currentConfig.baseURL}${apiPaths.files.checkMd5}`, { params: { md5: fileHash } });
+    console.log('check-md5返回:', data);
+    if (data.exists) {
+      uploadProgress.value = 100;
+      uploadStatus.value = "文件已存在，秒传成功";
+      options.onSuccess({ code: 200, message: "文件已存在", data: data.data });
+      fetchFiles();
+      return;
+    }
+  } catch (err) {
+    // 忽略查重失败，继续上传
+  }
+
+  // 2. 切片
+  const chunks = sliceFile(file, CHUNK_SIZE);
+  // 3. 查询已上传分片
+  let uploadedChunks = [];
+  try {
+    const { data } = await axios.get(`${currentConfig.baseURL}${apiPaths.files.uploadedChunks}`, { params: { fileHash } });
+    uploadedChunks = data.uploaded || [];
+  } catch {}
+  // 4. 逐片上传
+  let uploaded = 0;
+  for (let i = 0; i < chunks.length; i++) {
+    if (uploadedChunks.includes(i)) {
+      uploaded++;
+      uploadProgress.value = Math.round((uploaded / chunks.length) * 100);
+      continue;
+    }
     const formData = new FormData();
-    
-    // 直接使用原始文件名，仅处理特殊符号兼容性
-    const processedFile = new File(
-      [options.file], 
-      options.file.name.replace(/'/g, "%27"), // 保留单引号处理
-      { type: options.file.type }
-    );
-
-    formData.append("file", processedFile);
-
-    const response = await axios.post(
-      `${currentConfig.baseURL}${apiPaths.files.upload}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data; charset=UTF-8",
-        },
-      }
-    );
-
-    options.onSuccess(response.data);
-  } catch (error) {
-    options.onError(error);
+    formData.append("chunk", chunks[i]);
+    formData.append("fileHash", fileHash);
+    formData.append("chunkIndex", i);
+    try {
+      await axios.post(`${currentConfig.baseURL}${apiPaths.files.uploadChunk}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      uploaded++;
+      uploadProgress.value = Math.round((uploaded / chunks.length) * 100);
+    } catch (err) {
+      uploadStatus.value = `第${i + 1}片上传失败`;
+      options.onError(err);
+      return;
+    }
+  }
+  // 5. 合并分片
+  try {
+    const mergeRes = await axios.post(`${currentConfig.baseURL}${apiPaths.files.mergeChunks}`, {
+      fileHash,
+      totalChunks: chunks.length,
+      originalname: file.name,
+      mimetype: file.type,
+      size: file.size,
+    });
+    uploadProgress.value = 100;
+    uploadStatus.value = "上传并合并成功";
+    options.onSuccess(mergeRes.data);
+    fetchFiles();
+  } catch (err) {
+    uploadStatus.value = "合并失败";
+    options.onError(err);
   }
 };
+
+// 文件切片
+function sliceFile(file, size) {
+  const chunks = [];
+  let cur = 0;
+  while (cur < file.size) {
+    chunks.push(file.slice(cur, cur + size));
+    cur += size;
+  }
+  return chunks;
+}
+
+// 计算文件hash
+function calcFileHash(file) {
+  return new Promise((resolve) => {
+    const chunkSize = 2 * 1024 * 1024;
+    const chunks = Math.ceil(file.size / chunkSize);
+    let currentChunk = 0;
+    const spark = new SparkMD5.ArrayBuffer();
+    const fileReader = new FileReader();
+    function loadNext() {
+      const start = currentChunk * chunkSize;
+      const end = Math.min(file.size, start + chunkSize);
+      fileReader.readAsArrayBuffer(file.slice(start, end));
+    }
+    fileReader.onload = (e) => {
+      spark.append(e.target.result);
+      currentChunk++;
+      if (currentChunk < chunks) {
+        loadNext();
+      } else {
+        resolve(spark.end());
+      }
+    };
+    loadNext();
+  });
+}
+
 // 上传文件前的验证
 const beforeUpload = (file) => {
   // 设置文件大小限制
@@ -463,6 +588,28 @@ const onTypeFilterChange = (val) => {
   filteredType.value = val;
 };
 
+// 透明度设置：读取localStorage
+const componentOpacity = ref(1);
+const theme = ref(localStorage.getItem('theme') || 'light');
+function updateComponentOpacityFromStorage() {
+  theme.value = localStorage.getItem('theme') || 'light';
+  if (theme.value === "dark") {
+    const dark = localStorage.getItem("darkModeOpacity");
+    componentOpacity.value = dark ? parseFloat(dark) : 0.6;
+  } else {
+    const light = localStorage.getItem("lightModeOpacity");
+    componentOpacity.value = light ? parseFloat(light) : 1;
+  }
+}
+updateComponentOpacityFromStorage();
+window.addEventListener('storage', updateComponentOpacityFromStorage);
+
+const themeBgColor = computed(() =>
+  theme.value === 'dark'
+    ? `rgba(26,26,26,${componentOpacity.value})`
+    : `rgba(255,255,255,${componentOpacity.value})`
+);
+
 onMounted(() => {
   fetchFiles();
   // 初始化所有选项为未选中，"全部"为选中
@@ -644,5 +791,55 @@ onMounted(() => {
       }
     }
   }
+}
+
+.fade-upload-list-enter-active, .fade-upload-list-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-upload-list-enter-from, .fade-upload-list-leave-to {
+  opacity: 0;
+}
+.custom-upload-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  right: 0;
+  top: 60px;
+  z-index: 1000;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  min-width: 220px;
+}
+.el-upload-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--item-bg);
+  color: var(--text-color);
+}
+.el-upload-list__item:last-child {
+  border-bottom: none;
+}
+
+.global-upload-progress {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  width: 50vw;
+  transform: translateX(-50%);
+  box-shadow: 0 -2px 8px var(--shadow-color);
+  padding: 12px 0 8px 0;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+}
+
+.global-upload-progress .el-progress {
+  width: 90%;
+  max-width: none;
+  background: transparent;
 }
 </style>
