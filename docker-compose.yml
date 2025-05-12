@@ -29,18 +29,6 @@ services:
       mongodb:
         condition: service_healthy
 
-  hot_search:
-    build:
-      context: ./node
-      dockerfile: Dockerfile.python
-    environment:
-      - MONGODB_URI=mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
-    volumes:
-      - ./node:/app
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
   mongodb:
     image: mongo:4.4
     ports:

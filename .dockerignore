@@ -1,0 +1,23 @@
+# 通用忽略
+node_modules
+*.log
+.git
+.gitignore
+Dockerfile
+.dockerignore
+dist
+.env
+uploads
+*.md
+*.tgz
+npm-debug.log
+.vscode
+.idea
+__pycache__
+hot_search.log
+# 前端构建产物
+vue/dist
+# 后端上传目录
+node/uploads
+# 其他
+*.swp 

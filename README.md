@@ -140,8 +140,14 @@ docker compose restart
 # 重启特定服务
 docker compose restart frontend
 docker compose restart backend
-```
 
+# 删除并重新构建
+docker compose down -v&docker compose up -d
+docker compose up -d --build
+#清除build垃圾
+docker system prune
+
+```
 ### 数据备份
 
 MongoDB 数据存储在 Docker volume 中，可以通过以下命令备份：

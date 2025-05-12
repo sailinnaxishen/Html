@@ -44,7 +44,7 @@
           <transition-group name="fade-upload-list" tag="ul" class="el-upload-list el-upload-list--text custom-upload-list">
             <li v-for="(file, idx) in limitedUploadList" :key="file.uid" class="el-upload-list__item">
               <span class="el-upload-list__item-name">{{ file.name }}</span>
-              <el-progress v-if="file.status === 'uploading'" :percentage="file.percentage" :status="file.percentage === 100 ? 'success' : 'active'" style="width: 100px; display: inline-block; margin-left: 8px;" />
+              <el-progress v-if="file.status === 'uploading'" :percentage="file.percentage" :status="file.percentage === 100 ? 'success' : ''" style="width: 100px; display: inline-block; margin-left: 8px;" />
               <el-button size="mini" type="danger" @click="removeUploadFile(file)">删除</el-button>
             </li>
           </transition-group>
@@ -101,7 +101,7 @@
               v-model:visible="typePopoverVisible"
             >
               <el-checkbox-group v-model="filteredType" @change="onTypeFilterChange">
-                <el-checkbox v-for="item in typeFilters" :key="item.value" :label="item.value">
+                <el-checkbox v-for="item in typeFilters" :key="item.value" :value="item.value">
                   {{ item.text }}
                 </el-checkbox>
               </el-checkbox-group>
@@ -142,11 +142,28 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-progress v-if="uploadProgress > 0" :percentage="uploadProgress" :status="uploadProgress === 100 ? 'success' : 'active'" style="margin-top: 10px;" />
+      <el-progress v-if="uploadProgress > 0" :percentage="uploadProgress" :status="uploadProgress === 100 ? 'success' : ''" style="margin-top: 10px;" />
       <div v-if="uploadStatus" style="color: #409EFF; margin-bottom: 10px;">{{ uploadStatus }}</div>
     </main>
-    <div v-if="uploadProgress > 0 && uploadProgress < 100" class="global-upload-progress" :style="{ background: themeBgColor }">
-      <el-progress :percentage="uploadProgress" :status="uploadProgress === 100 ? 'success' : 'active'" show-text />
+    <div v-if="uploadStage === 'md5' || uploadStage === 'upload'" class="global-upload-progress apple-upload-progress-bg" :style="{ background: themeBgColor }">
+      <el-progress
+        :percentage="uploadStage === 'md5' ? md5Progress : uploadProgress"
+        :status="(uploadStage === 'md5' ? md5Progress : uploadProgress) === 100 ? 'success' : ''"
+        show-text
+        class="apple-progress"
+        :stroke-width="10"
+        style="width: 70%; min-width: 220px; position: relative;"
+      >
+        <template #default>
+          <span v-if="uploadStage === 'md5'">正在计算MD5: {{ md5Progress }}%</span>
+          <span v-else>上传进度: {{ uploadProgress }}%</span>
+        </template>
+      </el-progress>
+      <div style="margin-left: 18px; display: flex; gap: 8px;">
+        <el-button v-if="uploadStage === 'upload' && !isPaused" class="apple-upload-btn" size="small" @click="pauseUpload" :icon="VideoPause" circle />
+        <el-button v-if="uploadStage === 'upload' && isPaused" class="apple-upload-btn" size="small" @click="resumeUpload" :icon="VideoPlay" circle />
+        <el-button v-if="uploadStage !== 'idle'" class="apple-upload-btn" size="small" type="danger" @click="cancelUpload" :icon="Close" circle />
+      </div>
     </div>
   </div>
 </template>
@@ -163,6 +180,9 @@ import {
   Document,
   Search,
   ArrowDown,
+  VideoPause,
+  VideoPlay,
+  Close,
 } from "@element-plus/icons-vue";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -197,6 +217,11 @@ const typeChecked = ref({});
 
 const uploadProgress = ref(0);
 const uploadStatus = ref("");
+// 新增：MD5计算进度、暂停/取消状态
+const md5Progress = ref(0);
+const isPaused = ref(false);
+const isCanceled = ref(false);
+const uploadStage = ref('idle'); // 'md5' | 'upload' | 'done' | 'idle'
 
 // 分片上传参数
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB
@@ -262,26 +287,35 @@ const safeDecodeURI = (str) => {
 const customChunkUpload = async (options) => {
   uploadProgress.value = 0;
   uploadStatus.value = "";
+  md5Progress.value = 0;
+  isPaused.value = false;
+  isCanceled.value = false;
+  uploadStage.value = 'md5';
   const file = options.file;
-  // 1. 计算hash
-  const fileHash = await calcFileHash(file);
-  console.log('fileHash:', fileHash);
-
+  // 1. 计算hash，带进度
+  const fileHash = await calcFileHash(file, (percent) => {
+    md5Progress.value = percent;
+  });
+  if (isCanceled.value) {
+    uploadStatus.value = "已取消";
+    options.onError(new Error("用户取消上传"));
+    uploadStage.value = 'idle';
+    return;
+  }
+  md5Progress.value = 100;
+  uploadStage.value = 'upload';
   // 1.5 秒传：上传前先查md5
   try {
     const { data } = await axios.get(`${currentConfig.baseURL}${apiPaths.files.checkMd5}`, { params: { md5: fileHash } });
-    console.log('check-md5返回:', data);
     if (data.exists) {
       uploadProgress.value = 100;
       uploadStatus.value = "文件已存在，秒传成功";
+      uploadStage.value = 'done';
       options.onSuccess({ code: 200, message: "文件已存在", data: data.data });
       fetchFiles();
       return;
     }
-  } catch (err) {
-    // 忽略查重失败，继续上传
-  }
-
+  } catch (err) {}
   // 2. 切片
   const chunks = sliceFile(file, CHUNK_SIZE);
   // 3. 查询已上传分片
@@ -293,6 +327,21 @@ const customChunkUpload = async (options) => {
   // 4. 逐片上传
   let uploaded = 0;
   for (let i = 0; i < chunks.length; i++) {
+    if (isCanceled.value) {
+      uploadStatus.value = "已取消";
+      uploadStage.value = 'idle';
+      options.onError(new Error("用户取消上传"));
+      return;
+    }
+    while (isPaused.value) {
+      await new Promise(resolve => setTimeout(resolve, 200));
+      if (isCanceled.value) {
+        uploadStatus.value = "已取消";
+        uploadStage.value = 'idle';
+        options.onError(new Error("用户取消上传"));
+        return;
+      }
+    }
     if (uploadedChunks.includes(i)) {
       uploaded++;
       uploadProgress.value = Math.round((uploaded / chunks.length) * 100);
@@ -310,6 +359,7 @@ const customChunkUpload = async (options) => {
       uploadProgress.value = Math.round((uploaded / chunks.length) * 100);
     } catch (err) {
       uploadStatus.value = `第${i + 1}片上传失败`;
+      uploadStage.value = 'idle';
       options.onError(err);
       return;
     }
@@ -325,10 +375,12 @@ const customChunkUpload = async (options) => {
     });
     uploadProgress.value = 100;
     uploadStatus.value = "上传并合并成功";
+    uploadStage.value = 'done';
     options.onSuccess(mergeRes.data);
     fetchFiles();
   } catch (err) {
     uploadStatus.value = "合并失败";
+    uploadStage.value = 'idle';
     options.onError(err);
   }
 };
@@ -344,8 +396,8 @@ function sliceFile(file, size) {
   return chunks;
 }
 
-// 计算文件hash
-function calcFileHash(file) {
+// 计算文件hash，支持进度回调
+function calcFileHash(file, onProgress) {
   return new Promise((resolve) => {
     const chunkSize = 2 * 1024 * 1024;
     const chunks = Math.ceil(file.size / chunkSize);
@@ -360,6 +412,7 @@ function calcFileHash(file) {
     fileReader.onload = (e) => {
       spark.append(e.target.result);
       currentChunk++;
+      if (onProgress) onProgress(Math.round((currentChunk / chunks) * 100));
       if (currentChunk < chunks) {
         loadNext();
       } else {
@@ -610,6 +663,20 @@ const themeBgColor = computed(() =>
     : `rgba(255,255,255,${componentOpacity.value})`
 );
 
+// 暂停、继续、取消上传
+const pauseUpload = () => { isPaused.value = true; };
+const resumeUpload = () => { isPaused.value = false; };
+const cancelUpload = async () => {
+  const confirm = await ElMessageBox.confirm("确定要取消上传吗？", "提示", { type: "warning", confirmButtonText: "确定", cancelButtonText: "取消" }).catch(() => false);
+  if (confirm) {
+    isCanceled.value = true;
+    uploadStatus.value = "已取消";
+    uploadStage.value = 'idle';
+    uploadProgress.value = 0;
+    md5Progress.value = 0;
+  }
+};
+
 onMounted(() => {
   fetchFiles();
   // 初始化所有选项为未选中，"全部"为选中
@@ -841,5 +908,65 @@ onMounted(() => {
   width: 90%;
   max-width: none;
   background: transparent;
+}
+
+.apple-progress {
+  .el-progress-bar__outer {
+    background: rgba(200, 200, 200, 0.3);
+    border-radius: 8px;
+    height: 10px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .el-progress-bar__inner {
+    background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    border-radius: 8px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .el-progress__text {
+    color: #333;
+    font-size: 13px;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -60%);
+    background: rgba(255,255,255,0.7);
+    border-radius: 6px;
+    padding: 0 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  }
+}
+.apple-upload-btn {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f7;
+  color: #007aff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: none;
+  margin: 0 6px;
+  transition: background 0.2s, box-shadow 0.2s;
+  &:hover {
+    background: #e0eaff;
+    box-shadow: 0 4px 16px rgba(0,122,255,0.08);
+  }
+}
+.apple-upload-progress-bg {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  padding: 18px 32px 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 340px;
+  max-width: 90vw;
+  margin: 0 auto;
 }
 </style>

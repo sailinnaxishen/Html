@@ -144,3 +144,210 @@
 2025-04-24 16:50:52,633 - INFO - 成功获取 50 条微博热搜
 2025-04-24 16:50:52,639 - INFO - 成功保存 50 条微博热搜数据
 2025-04-24 16:50:52,642 - INFO - 热搜数据更新完成 - 2025-04-24 16:50:52
+2025-05-11 13:50:55,350 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 13:50:55,389 - INFO - MongoDB连接成功
+2025-05-11 13:50:55,389 - INFO - 热搜数据采集服务启动...
+2025-05-11 13:50:55,784 - INFO - 成功获取 50 条B站热搜
+2025-05-11 13:50:55,806 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 13:50:56,471 - INFO - 成功获取 50 条微博热搜
+2025-05-11 13:50:56,477 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 13:50:56,523 - INFO - 已清理 864 条24小时前的数据
+2025-05-11 13:50:56,523 - INFO - 热搜数据更新完成 - 2025-05-11 13:50:56
+2025-05-11 13:58:02,823 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 13:58:02,853 - INFO - MongoDB连接成功
+2025-05-11 13:58:02,853 - INFO - 热搜数据采集服务启动...
+2025-05-11 13:58:03,255 - INFO - 成功获取 50 条B站热搜
+2025-05-11 13:58:03,266 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 13:58:03,752 - INFO - 成功获取 51 条微博热搜
+2025-05-11 13:58:03,758 - INFO - 成功保存 51 条微博热搜数据
+2025-05-11 13:58:03,761 - INFO - 热搜数据更新完成 - 2025-05-11 13:58:03
+2025-05-11 14:05:10,541 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 14:05:10,580 - INFO - MongoDB连接成功
+2025-05-11 14:05:10,580 - INFO - 热搜数据采集服务启动...
+2025-05-11 14:05:10,931 - INFO - 成功获取 50 条B站热搜
+2025-05-11 14:05:10,943 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 14:05:11,457 - INFO - 成功获取 50 条微博热搜
+2025-05-11 14:05:11,464 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 14:05:11,466 - INFO - 热搜数据更新完成 - 2025-05-11 14:05:11
+2025-05-11 14:21:08,248 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 14:21:08,291 - INFO - MongoDB连接成功
+2025-05-11 14:21:08,292 - INFO - 热搜数据采集服务启动...
+2025-05-11 14:21:08,695 - INFO - 成功获取 50 条B站热搜
+2025-05-11 14:21:08,706 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 14:21:09,282 - INFO - 成功获取 50 条微博热搜
+2025-05-11 14:21:09,287 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 14:21:09,290 - INFO - 热搜数据更新完成 - 2025-05-11 14:21:09
+2025-05-11 14:26:25,385 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 14:26:25,422 - INFO - MongoDB连接成功
+2025-05-11 14:26:25,422 - INFO - 热搜数据采集服务启动...
+2025-05-11 14:26:25,814 - INFO - 成功获取 50 条B站热搜
+2025-05-11 14:26:25,824 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 14:26:38,348 - INFO - 成功获取 50 条微博热搜
+2025-05-11 14:26:38,358 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 14:26:38,362 - INFO - 热搜数据更新完成 - 2025-05-11 14:26:38
+2025-05-11 15:17:18,613 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 15:17:18,649 - INFO - MongoDB连接成功
+2025-05-11 15:17:18,649 - INFO - 热搜数据采集服务启动...
+2025-05-11 15:17:18,998 - INFO - 成功获取 50 条B站热搜
+2025-05-11 15:17:19,019 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 15:17:19,532 - INFO - 成功获取 50 条微博热搜
+2025-05-11 15:17:19,539 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 15:17:19,541 - INFO - 热搜数据更新完成 - 2025-05-11 15:17:19
+2025-05-11 15:35:01,562 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 15:35:01,595 - INFO - MongoDB连接成功
+2025-05-11 15:35:01,595 - INFO - 热搜数据采集服务启动...
+2025-05-11 15:35:01,989 - INFO - 成功获取 50 条B站热搜
+2025-05-11 15:35:02,009 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 15:35:02,497 - INFO - 成功获取 50 条微博热搜
+2025-05-11 15:35:02,503 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 15:35:02,505 - INFO - 热搜数据更新完成 - 2025-05-11 15:35:02
+2025-05-11 15:51:32,738 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 15:51:32,783 - INFO - MongoDB连接成功
+2025-05-11 15:51:32,784 - INFO - 热搜数据采集服务启动...
+2025-05-11 15:51:33,168 - INFO - 成功获取 50 条B站热搜
+2025-05-11 15:51:33,178 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 15:51:33,640 - INFO - 成功获取 50 条微博热搜
+2025-05-11 15:51:33,646 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 15:51:33,648 - INFO - 热搜数据更新完成 - 2025-05-11 15:51:33
+2025-05-11 16:51:34,162 - INFO - 成功获取 50 条B站热搜
+2025-05-11 16:51:34,168 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 16:51:34,669 - INFO - 成功获取 50 条微博热搜
+2025-05-11 16:51:34,677 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 16:51:34,680 - INFO - 热搜数据更新完成 - 2025-05-11 16:51:34
+2025-05-11 16:57:28,151 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 16:57:28,191 - INFO - MongoDB连接成功
+2025-05-11 16:57:28,192 - INFO - 热搜数据采集服务启动...
+2025-05-11 16:57:28,568 - INFO - 成功获取 50 条B站热搜
+2025-05-11 16:57:28,578 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 16:57:29,070 - INFO - 成功获取 50 条微博热搜
+2025-05-11 16:57:29,077 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 16:57:29,079 - INFO - 热搜数据更新完成 - 2025-05-11 16:57:29
+2025-05-11 17:46:36,083 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 17:46:36,122 - INFO - MongoDB连接成功
+2025-05-11 17:46:36,122 - INFO - 热搜数据采集服务启动...
+2025-05-11 17:46:36,528 - INFO - 成功获取 50 条B站热搜
+2025-05-11 17:46:36,539 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 17:46:37,024 - INFO - 成功获取 50 条微博热搜
+2025-05-11 17:46:37,030 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 17:46:37,032 - INFO - 热搜数据更新完成 - 2025-05-11 17:46:37
+2025-05-11 17:49:58,694 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 17:49:58,727 - INFO - MongoDB连接成功
+2025-05-11 17:49:58,728 - INFO - 热搜数据采集服务启动...
+2025-05-11 17:49:59,111 - INFO - 成功获取 50 条B站热搜
+2025-05-11 17:49:59,122 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 17:49:59,569 - INFO - 成功获取 51 条微博热搜
+2025-05-11 17:49:59,575 - INFO - 成功保存 51 条微博热搜数据
+2025-05-11 17:49:59,577 - INFO - 热搜数据更新完成 - 2025-05-11 17:49:59
+2025-05-11 17:55:37,238 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 17:55:37,284 - INFO - MongoDB连接成功
+2025-05-11 17:55:37,284 - INFO - 热搜数据采集服务启动...
+2025-05-11 17:55:37,604 - INFO - 成功获取 50 条B站热搜
+2025-05-11 17:55:37,615 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 17:55:38,122 - INFO - 成功获取 50 条微博热搜
+2025-05-11 17:55:38,128 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 17:55:38,130 - INFO - 热搜数据更新完成 - 2025-05-11 17:55:38
+2025-05-11 17:57:55,733 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 17:57:55,773 - INFO - MongoDB连接成功
+2025-05-11 17:57:55,773 - INFO - 热搜数据采集服务启动...
+2025-05-11 17:57:56,087 - INFO - 成功获取 50 条B站热搜
+2025-05-11 17:57:56,099 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 17:57:56,679 - INFO - 成功获取 51 条微博热搜
+2025-05-11 17:57:56,685 - INFO - 成功保存 51 条微博热搜数据
+2025-05-11 17:57:56,687 - INFO - 热搜数据更新完成 - 2025-05-11 17:57:56
+2025-05-11 18:04:41,165 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 18:04:41,203 - INFO - MongoDB连接成功
+2025-05-11 18:04:41,204 - INFO - 热搜数据采集服务启动...
+2025-05-11 18:04:41,555 - INFO - 成功获取 50 条B站热搜
+2025-05-11 18:04:41,565 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 18:04:42,068 - INFO - 成功获取 50 条微博热搜
+2025-05-11 18:04:42,074 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 18:04:42,077 - INFO - 热搜数据更新完成 - 2025-05-11 18:04:42
+2025-05-11 18:36:08,559 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-11 18:36:08,603 - INFO - MongoDB连接成功
+2025-05-11 18:36:08,604 - INFO - 热搜数据采集服务启动...
+2025-05-11 18:36:08,960 - INFO - 成功获取 50 条B站热搜
+2025-05-11 18:36:08,970 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 18:36:09,568 - INFO - 成功获取 50 条微博热搜
+2025-05-11 18:36:09,574 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 18:36:09,576 - INFO - 热搜数据更新完成 - 2025-05-11 18:36:09
+2025-05-11 19:36:10,082 - INFO - 成功获取 50 条B站热搜
+2025-05-11 19:36:10,091 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 19:36:18,832 - INFO - 成功获取 50 条微博热搜
+2025-05-11 19:36:18,843 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 19:36:18,847 - INFO - 热搜数据更新完成 - 2025-05-11 19:36:18
+2025-05-11 20:36:23,475 - INFO - 成功获取 50 条B站热搜
+2025-05-11 20:36:23,481 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 20:36:28,363 - INFO - 成功获取 50 条微博热搜
+2025-05-11 20:36:28,371 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 20:36:28,373 - INFO - 热搜数据更新完成 - 2025-05-11 20:36:28
+2025-05-11 21:36:28,964 - INFO - 成功获取 50 条B站热搜
+2025-05-11 21:36:28,970 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 21:36:29,580 - INFO - 成功获取 50 条微博热搜
+2025-05-11 21:36:29,589 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 21:36:29,592 - INFO - 热搜数据更新完成 - 2025-05-11 21:36:29
+2025-05-11 22:36:30,041 - INFO - 成功获取 50 条B站热搜
+2025-05-11 22:36:30,048 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 22:36:34,629 - INFO - 成功获取 50 条微博热搜
+2025-05-11 22:36:34,636 - INFO - 成功保存 50 条微博热搜数据
+2025-05-11 22:36:34,638 - INFO - 热搜数据更新完成 - 2025-05-11 22:36:34
+2025-05-11 23:36:35,081 - INFO - 成功获取 50 条B站热搜
+2025-05-11 23:36:35,090 - INFO - 成功保存 50 条B站热搜数据
+2025-05-11 23:36:39,651 - INFO - 成功获取 51 条微博热搜
+2025-05-11 23:36:39,659 - INFO - 成功保存 51 条微博热搜数据
+2025-05-11 23:36:39,661 - INFO - 热搜数据更新完成 - 2025-05-11 23:36:39
+2025-05-12 00:36:39,767 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f7850>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 00:36:39,771 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f7070>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 00:36:39,774 - INFO - 热搜数据更新完成 - 2025-05-12 00:36:39
+2025-05-12 01:36:39,879 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f83a45d30>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 01:36:39,886 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f83a45b20>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 01:36:39,891 - INFO - 热搜数据更新完成 - 2025-05-12 01:36:39
+2025-05-12 02:36:39,992 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f7580>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 02:36:40,000 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f7c70>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 02:36:40,011 - INFO - 热搜数据更新完成 - 2025-05-12 02:36:40
+2025-05-12 03:36:40,116 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f0520>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 03:36:40,123 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f0eb0>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 03:36:40,128 - INFO - 热搜数据更新完成 - 2025-05-12 03:36:40
+2025-05-12 04:36:40,212 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f82191910>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 04:36:40,219 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f7520>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 04:36:40,224 - INFO - 热搜数据更新完成 - 2025-05-12 04:36:40
+2025-05-12 05:36:40,330 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f7a90>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 05:36:40,337 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f0b20>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 05:36:40,341 - INFO - 热搜数据更新完成 - 2025-05-12 05:36:40
+2025-05-12 06:36:40,378 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f83a45790>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 06:36:40,386 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f83a45af0>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 06:36:40,391 - INFO - 热搜数据更新完成 - 2025-05-12 06:36:40
+2025-05-12 07:36:40,481 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f83a456a0>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 07:36:40,488 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f0370>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 07:36:40,492 - INFO - 热搜数据更新完成 - 2025-05-12 07:36:40
+2025-05-12 08:36:40,601 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f0d60>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 08:36:40,607 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f7ca0>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 08:36:40,612 - INFO - 热搜数据更新完成 - 2025-05-12 08:36:40
+2025-05-12 09:36:41,117 - INFO - 成功获取 50 条B站热搜
+2025-05-12 09:36:41,127 - INFO - 成功保存 50 条B站热搜数据
+2025-05-12 09:36:41,766 - INFO - 成功获取 50 条微博热搜
+2025-05-12 09:36:41,775 - INFO - 成功保存 50 条微博热搜数据
+2025-05-12 09:36:41,778 - INFO - 热搜数据更新完成 - 2025-05-12 09:36:41
+2025-05-12 10:36:42,295 - INFO - 成功获取 50 条B站热搜
+2025-05-12 10:36:42,303 - INFO - 成功保存 50 条B站热搜数据
+2025-05-12 10:36:42,955 - INFO - 成功获取 51 条微博热搜
+2025-05-12 10:36:42,963 - INFO - 成功保存 51 条微博热搜数据
+2025-05-12 10:36:42,967 - INFO - 热搜数据更新完成 - 2025-05-12 10:36:42
+2025-05-12 11:36:43,067 - ERROR - 获取B站热搜失败: HTTPSConnectionPool(host='api.bilibili.com', port=443): Max retries exceeded with url: /x/web-interface/search/square?limit=50 (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f83a45520>: Failed to resolve 'api.bilibili.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 11:36:43,074 - ERROR - 获取微博热搜失败: HTTPSConnectionPool(host='weibo.com', port=443): Max retries exceeded with url: /ajax/side/hotSearch (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f3f821f0610>: Failed to resolve 'weibo.com' ([Errno -3] Temporary failure in name resolution)"))
+2025-05-12 11:36:43,079 - INFO - 热搜数据更新完成 - 2025-05-12 11:36:43
+2025-05-12 12:47:07,137 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-12 12:47:07,168 - INFO - MongoDB连接成功
+2025-05-12 12:47:07,169 - INFO - 热搜数据采集服务启动...
+2025-05-12 12:47:07,524 - INFO - 成功获取 50 条B站热搜
+2025-05-12 12:47:07,534 - INFO - 成功保存 50 条B站热搜数据
+2025-05-12 12:47:08,093 - INFO - 成功获取 51 条微博热搜
+2025-05-12 12:47:08,100 - INFO - 成功保存 51 条微博热搜数据
+2025-05-12 12:47:08,102 - INFO - 热搜数据更新完成 - 2025-05-12 12:47:08
+2025-05-12 12:56:47,459 - INFO - 最终使用的 MongoDB 连接字符串: mongodb://hot_user:hot_password@mongodb:27017/hot_search_db?authSource=hot_search_db&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000&serverSelectionTimeoutMS=30000&retryWrites=true&w=majority
+2025-05-12 12:56:47,488 - INFO - MongoDB连接成功
+2025-05-12 12:56:47,488 - INFO - 热搜数据采集服务启动...
+2025-05-12 12:56:47,823 - INFO - 成功获取 50 条B站热搜
+2025-05-12 12:56:47,834 - INFO - 成功保存 50 条B站热搜数据
+2025-05-12 12:56:48,373 - INFO - 成功获取 50 条微博热搜
+2025-05-12 12:56:48,382 - INFO - 成功保存 50 条微博热搜数据
+2025-05-12 12:56:48,386 - INFO - 热搜数据更新完成 - 2025-05-12 12:56:48
