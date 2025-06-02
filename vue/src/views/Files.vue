@@ -7,7 +7,7 @@
           :icon="ArrowLeft"
           >返回</el-button
         >
-        <h1>个人网盘</h1>
+        <h1>{{ currentDiskType === 'public' ? '公共云盘' : '个人云盘' }}</h1>
       </div>
       <div class="header-search">
         <el-input
@@ -23,6 +23,9 @@
           </template>
         </el-input>
       </div>
+      <el-button style="margin-right: 12px;" @click="toggleDiskType" type="success">
+        切换到{{ currentDiskType === 'public' ? '个人云盘' : '公共云盘' }}
+      </el-button>
       <el-upload
         class="upload-btn"
         :http-request="customChunkUpload"
@@ -229,6 +232,9 @@ const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB
 const uploadFileList = ref([]);
 const uploadRef = ref();
 
+// 新增：记录当前上传的fileHash
+const currentUploadingFileHash = ref(null);
+
 const limitedUploadList = computed(() => {
   // 只显示最新的2个
   return uploadFileList.value.slice(-2);
@@ -239,26 +245,36 @@ function removeUploadFile(file) {
   uploadRef.value.handleRemove(file);
 }
 
+const currentDiskType = ref('public');
+function toggleDiskType() {
+  currentDiskType.value = currentDiskType.value === 'public' ? 'user' : 'public';
+  fetchFiles();
+}
+
 // 获取文件列表
 const fetchFiles = async () => {
   loading.value = true;
   try {
+    const params = { ownerType: currentDiskType.value };
+    let headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+    const token = localStorage.getItem('token');
+    if (currentDiskType.value === 'user' && token) {
+      headers['Authorization'] = 'Bearer ' + token;
+    }
     const response = await axios.get(
       `${currentConfig.baseURL}${apiPaths.files.list}`,
       {
+        params,
         timeout: 5000,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+        headers,
       }
     );
-
     if (response.data?.data) {
-      // 关键修改：解码文件名
       files.value = response.data.data.map((file) => ({
         ...file,
-        // 解码原始文件名（兼容双重编码情况）
         originalname: safeDecodeURI(file.originalname),
       }));
     }
@@ -296,17 +312,38 @@ const customChunkUpload = async (options) => {
   const fileHash = await calcFileHash(file, (percent) => {
     md5Progress.value = percent;
   });
+  currentUploadingFileHash.value = fileHash; // 记录当前fileHash
   if (isCanceled.value) {
     uploadStatus.value = "已取消";
-    options.onError(new Error("用户取消上传"));
+    options.onError(new Error("取消上传"));
     uploadStage.value = 'idle';
+    currentUploadingFileHash.value = null;
     return;
   }
   md5Progress.value = 100;
   uploadStage.value = 'upload';
   // 1.5 秒传：上传前先查md5
   try {
-    const { data } = await axios.get(`${currentConfig.baseURL}${apiPaths.files.checkMd5}`, { params: { md5: fileHash } });
+    const params = { md5: fileHash, ownerType: currentDiskType.value };
+    if (currentDiskType.value === 'user') {
+      let userId = null;
+      try {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+        if (userInfo.id) userId = userInfo.id;
+      } catch {}
+      if (!userId) {
+        // 尝试从token解码
+        const token = localStorage.getItem('token');
+        if (token) {
+          try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            if (payload.id) userId = payload.id;
+          } catch {}
+        }
+      }
+      if (userId) params.userId = userId;
+    }
+    const { data } = await axios.get(`${currentConfig.baseURL}${apiPaths.files.checkMd5}`, { params });
     if (data.exists) {
       uploadProgress.value = 100;
       uploadStatus.value = "文件已存在，秒传成功";
@@ -330,7 +367,7 @@ const customChunkUpload = async (options) => {
     if (isCanceled.value) {
       uploadStatus.value = "已取消";
       uploadStage.value = 'idle';
-      options.onError(new Error("用户取消上传"));
+      options.onError(new Error("取消上传"));
       return;
     }
     while (isPaused.value) {
@@ -338,7 +375,7 @@ const customChunkUpload = async (options) => {
       if (isCanceled.value) {
         uploadStatus.value = "已取消";
         uploadStage.value = 'idle';
-        options.onError(new Error("用户取消上传"));
+        options.onError(new Error("取消上传"));
         return;
       }
     }
@@ -365,23 +402,43 @@ const customChunkUpload = async (options) => {
     }
   }
   // 5. 合并分片
+  const token = localStorage.getItem('token');
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+  if (currentDiskType.value === 'user' && token) {
+    headers['Authorization'] = 'Bearer ' + token;
+  }
   try {
-    const mergeRes = await axios.post(`${currentConfig.baseURL}${apiPaths.files.mergeChunks}`, {
-      fileHash,
-      totalChunks: chunks.length,
-      originalname: file.name,
-      mimetype: file.type,
-      size: file.size,
-    });
+    const mergeRes = await axios.post(
+      `${currentConfig.baseURL}${apiPaths.files.mergeChunks}`,
+      {
+        fileHash,
+        totalChunks: chunks.length,
+        originalname: file.name,
+        mimetype: file.type,
+        size: file.size,
+        ownerType: currentDiskType.value,
+      },
+      { headers }
+    );
     uploadProgress.value = 100;
-    uploadStatus.value = "上传并合并成功";
+    uploadStatus.value = "上传成功";
     uploadStage.value = 'done';
     options.onSuccess(mergeRes.data);
     fetchFiles();
   } catch (err) {
-    uploadStatus.value = "合并失败";
-    uploadStage.value = 'idle';
-    options.onError(err);
+    if (err.response && err.response.status === 409) {
+      ElMessage.error(err.response.data?.message || "该区已存在该文件，无法重复上传");
+      uploadStatus.value = "上传失败";
+      uploadStage.value = 'idle';
+      uploadProgress.value = 0;
+      md5Progress.value = 0;
+    } else {
+      uploadStatus.value = "上传失败";
+      uploadStage.value = 'idle';
+      options.onError(err);
+    }
   }
 };
 
@@ -674,6 +731,11 @@ const cancelUpload = async () => {
     uploadStage.value = 'idle';
     uploadProgress.value = 0;
     md5Progress.value = 0;
+    // 新增：通知后端清理分片
+    if (currentUploadingFileHash.value) {
+      axios.post(`${currentConfig.baseURL}${apiPaths.files.cancelUpload}`, { fileHash: currentUploadingFileHash.value });
+      currentUploadingFileHash.value = null;
+    }
   }
 };
 

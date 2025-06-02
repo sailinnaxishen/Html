@@ -9,10 +9,10 @@
 </template>
 
 <script setup>
-import { watch } from "vue";
+import { watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { currentConfig } from "./config";
-
+import { IMAGE_PATHS } from '@/assets/images.js'
 const router = useRouter();
 
 // 监听路由变化
@@ -23,6 +23,13 @@ watch(
   },
   { immediate: true }
 );
+
+onMounted(() => {
+  document.documentElement.style.setProperty(
+    '--uri-image', 
+    `url(${IMAGE_PATHS.background})`
+  );
+});
 </script>
 
 <style lang="scss">
@@ -37,7 +44,7 @@ watch(
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('@/assets/images/uri.png');
+  background-image: var(--uri-image);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

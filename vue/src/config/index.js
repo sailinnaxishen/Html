@@ -37,6 +37,7 @@ export const apiPaths = {
     uploadChunk: "/api/files/upload-chunk",
     mergeChunks: "/api/files/merge-chunks",
     uploadedChunks: "/api/files/uploaded-chunks",
+    cancelUpload: "/api/files/cancel-upload",
   },
   monitor: {
     systemStats: '/api/monitor/system-stats'
@@ -47,6 +48,11 @@ export const apiPaths = {
   hotSearch: {
     bilibili: '/api/hot-search/bilibili',
     weibo: '/api/hot-search/weibo'
+  },
+  auth: {
+    login: "/api/auth/login",
+    register: "/api/auth/register",
+    changePassword: "/api/auth/change-password",
   }
 }
 
@@ -108,6 +114,15 @@ export const routes = [
     path: '/about',
     name: 'About',
     component: () => import('@/views/About.vue')
+  },{
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/Login.vue')
+  },
+  {
+    path: '/change-password',
+    name: 'ChangePassword',
+    component: () => import('@/views/ChangePassword.vue')
   }
 ]
 

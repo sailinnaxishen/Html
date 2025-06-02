@@ -11,6 +11,7 @@ const hotSearchRoutes = require("./routes/hotSearchRoutes");
 const errorHandler = require("./middlewares/errorHandler");
 const config = require("./config");
 const connectDB = require("./config/database");
+const authRoutes = require("./routes/authRoutes");
 
 // 创建Express应用
 const app = express();
@@ -38,6 +39,7 @@ app.use("/api/files", fileRoutes);
 app.use("/api/time", timeRoutes);
 app.use("/api/monitor", monitorRoutes);
 app.use("/api/hot-search", hotSearchRoutes);
+app.use("/api/auth", authRoutes);
 // 错误处理中间件
 app.use(errorHandler);
 const PORT = config.server.port;

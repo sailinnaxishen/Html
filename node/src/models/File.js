@@ -52,6 +52,17 @@ const FileSchema = new mongoose.Schema({
     required: true,
     index: true,
   },
+  ownerType: {
+    type: String,
+    enum: ['public', 'user'],
+    default: 'public',
+    required: true
+  },
+  ownerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
 });
 
 // 更新时间中间件

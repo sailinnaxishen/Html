@@ -8,20 +8,25 @@ const config = require("../config");
 const axios = require("axios");
 const iconv = require('iconv-lite');
 const jschardet = require('jschardet'); // 需要安装
+const auth = require('../middlewares/auth');
 
-// 配置文件上传
+// 配置文件上传（动态目录）
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    const uploadDir = config.upload.uploadDir && path.isAbsolute(config.upload.uploadDir || "uploads")
-      ? config.upload.uploadDir
-      : path.join(__dirname, "../../", config.upload.uploadDir);
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+  destination: async function (req, file, cb) {
+    let baseDir = config.upload.uploadDir || 'uploads';
+    let targetDir = baseDir;
+    if (req.body.ownerType === 'public') {
+      targetDir = path.join(baseDir, 'public');
+    } else if (req.body.ownerType === 'user' && req.user) {
+      targetDir = path.join(baseDir, req.user._id.toString());
     }
-    cb(null, uploadDir);
+    if (!fs.existsSync(targetDir)) {
+      fs.mkdirSync(targetDir, { recursive: true });
+    }
+    cb(null, targetDir);
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, Date.now() + '-' + file.originalname);
   },
 });
 
@@ -41,94 +46,21 @@ const finalUploadDir = baseUploadDir;
 const chunkMulter = multer({ dest: chunkUploadDir });
 
 // 获取文件列表
-router.get("/", async (req, res) => {
-  try {
-    const files = await File.find().sort({ createdAt: -1 });
-    res.json({
-      code: 200,
-      message: "获取文件列表成功",
-      data: files,
-    });
-  } catch (error) {
-    console.error("获取文件列表失败:", error);
-    res.status(500).json({
-      code: 500,
-      message: "获取文件列表失败",
-      error: error.message,
-    });
+router.get("/", async (req, res, next) => {
+  const { ownerType } = req.query;
+  if (ownerType === 'user') {
+    return auth(req, res, () => require('../controllers/fileController').getAllFiles(req, res));
+  } else {
+    return require('../controllers/fileController').getAllFiles(req, res);
   }
 });
 
-router.post("/upload", upload.single("file"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({
-        code: 400,
-        message: "没有文件被上传",
-      });
-    }
-
-    let novelInfo = null;
-    if (req.file.mimetype === "text/plain") {
-      try {
-        // 读取原始 buffer
-        const buffer = await fs.promises.readFile(req.file.path);
-        // 检测编码
-        const detected = jschardet.detect(buffer);
-        let content;
-        if (detected.encoding && detected.encoding.toLowerCase() !== 'utf-8') {
-          content = iconv.decode(buffer, detected.encoding);
-        } else {
-          content = buffer.toString('utf-8');
-        }
-        content = content.substring(0, 9000);
-        const prompt = `帮我看一下这本小说写了什么，以以下格式提供:'''json{"name":"小说名字","author":"作者名字","P1":"主角1","P2":"主角2","tag":"小说的标签eg：abo、futa、扶她、姐妹、主受视角、主攻视角","about":"简介"'''}\n\n${content}`;
-        const response = await axios.post(
-          "https://api.deepseek.com/v1/chat/completions",
-          {
-            model: "deepseek-chat",
-            messages: [{ role: "user", content: prompt }],
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer sk-c53a884c47b842f58a2068c2e37bf679",
-            },
-            timeout: 60000,
-          }
-        );
-        const text = response.data.choices[0].message.content;
-        const match = text.match(/\{[\s\S]*\}/);
-        if (match) {
-          novelInfo = JSON.parse(match[0]);
-        }
-      } catch (err) {
-        console.error("deepseek解析失败:", err);
-      }
-    }
-
-    const file = new File({
-      filename: req.file.filename,
-      originalname: Buffer.from(req.file.originalname, 'latin1').toString('utf8'),
-      mimetype: req.file.mimetype,
-      size: req.file.size,
-      path: req.file.path,
-      novelInfo,
-    });
-
-    await file.save();
-    res.status(201).json({
-      code: 201,
-      message: "文件上传成功",
-      data: file,
-    });
-  } catch (error) {
-    console.error("文件上传失败:", error);
-    res.status(500).json({
-      code: 500,
-      message: "文件上传失败",
-      error: error.message,
-    });
+router.post("/upload", upload.single("file"), async (req, res, next) => {
+  const { ownerType } = req.body;
+  if (ownerType === 'user') {
+    return auth(req, res, () => require('../controllers/fileController').uploadFile(req, res));
+  } else {
+    return require('../controllers/fileController').uploadFile(req, res);
   }
 });
 
@@ -280,17 +212,40 @@ router.get('/uploaded-chunks', async (req, res) => {
 
 // 合并分片
 router.post('/merge-chunks', async (req, res) => {
-  const { fileHash, totalChunks, originalname, mimetype, size } = req.body;
+  const { fileHash, totalChunks, originalname, mimetype, size, ownerType = 'public' } = req.body;
   if (!fileHash || !totalChunks || !originalname) {
     return res.status(400).json({ code: 400, message: '缺少参数' });
   }
-  // 查重：如已存在相同md5文件，直接返回
-  const exist = await File.findOne({ md5: fileHash });
-  if (exist) {
-    return res.json({ code: 200, message: '文件已存在', data: exist });
+  let baseDir = config.upload.uploadDir || 'uploads';
+  let targetDir = baseDir;
+  let ownerId = null;
+  if (ownerType === 'public') {
+    targetDir = path.join(baseDir, 'public');
+  } else if (ownerType === 'user') {
+    // 校验token
+    await new Promise((resolve) => auth(req, res, resolve));
+    if (!req.user) {
+      return res.status(401).json({ code: 401, message: '未认证' });
+    }
+    ownerId = req.user._id;
+    targetDir = path.join(baseDir, ownerId.toString());
+  }
+  // 查重：如公共区已存在同MD5文件，且本次上传目标是公共区，则拒绝
+  const publicExist = await File.findOne({ md5: fileHash, ownerType: 'public' });
+  if (ownerType === 'public' && publicExist) {
+    return res.status(409).json({ code: 409, message: '公共区已存在该文件' });
+  }
+  if (ownerType === 'user' && ownerId) {
+    const userExist = await File.findOne({ md5: fileHash, ownerType: 'user', ownerId });
+    if (userExist) {
+      return res.status(409).json({ code: 409, message: '用户区已存在该文件' });
+    }
+  }
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
   }
   const chunkDir = path.join(chunkUploadDir, fileHash);
-  const finalPath = path.join(finalUploadDir, `${Date.now()}-${originalname}`);
+  const finalPath = path.join(targetDir, `${Date.now()}-${originalname}`);
   try {
     const writeStream = fs.createWriteStream(finalPath);
     let i = 0;
@@ -327,6 +282,8 @@ router.post('/merge-chunks', async (req, res) => {
         path: finalPath,
         novelInfo: null,
         md5: fileHash,
+        ownerType,
+        ownerId,
       });
       await file.save();
       res.json({ code: 201, message: '文件合并成功', data: file });
@@ -342,13 +299,37 @@ router.post('/merge-chunks', async (req, res) => {
 
 // 查询md5是否已存在
 router.get('/check-md5', async (req, res) => {
-  const { md5 } = req.query;
+  const { md5, ownerType, userId } = req.query;
   if (!md5) return res.status(400).json({ code: 400, message: '缺少md5' });
-  const exist = await File.findOne({ md5 });
+  let query = { md5 };
+  if (ownerType === 'public') {
+    query.ownerType = 'public';
+  } else if (ownerType === 'user' && userId) {
+    query.ownerType = 'user';
+    query.ownerId = userId;
+  }
+  const exist = await File.findOne(query);
   if (exist) {
     return res.json({ code: 200, exists: true, data: exist });
   }
   res.json({ code: 200, exists: false });
+});
+
+// 取消上传，删除分片
+router.post('/cancel-upload', async (req, res) => {
+  const { fileHash } = req.body;
+  if (!fileHash) {
+    return res.status(400).json({ code: 400, message: '缺少fileHash' });
+  }
+  const chunkDir = path.join(chunkUploadDir, fileHash);
+  try {
+    if (fs.existsSync(chunkDir)) {
+      fs.rmSync(chunkDir, { recursive: true, force: true });
+    }
+    res.json({ code: 200, message: '分片已清理' });
+  } catch (err) {
+    res.status(500).json({ code: 500, message: '清理失败', error: err.message });
+  }
 });
 
 console.log("config.upload.uploadDir:", config.upload.uploadDir);

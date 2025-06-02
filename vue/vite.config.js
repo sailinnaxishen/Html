@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
       allowedHosts: ["localhost", "127.0.0.1", "0.0.0.0", ".sealoshzh.site"],
       proxy: {
         "/api": {
-          target: "http://192.168.127.64:3000",
+          target: "http://192.168.97.64:3000",
           changeOrigin: true,
         },
       },

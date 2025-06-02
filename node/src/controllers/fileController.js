@@ -7,7 +7,15 @@ class FileController {
   // 获取所有文件列表
   async getAllFiles(req, res) {
     try {
-      const files = await File.find().sort({ createdAt: -1 });
+      const { ownerType = 'public' } = req.query;
+      let query = { ownerType };
+      if (ownerType === 'user') {
+        if (!req.user) {
+          return res.status(401).json({ code: 401, message: '未认证' });
+        }
+        query.ownerId = req.user._id;
+      }
+      const files = await File.find(query).sort({ createdAt: -1 });
       res.json({
         code: 200,
         data: files,
@@ -30,15 +38,23 @@ class FileController {
           message: "没有文件被上传",
         });
       }
-
+      const { ownerType = 'public' } = req.body;
+      let ownerId = null;
+      if (ownerType === 'user') {
+        if (!req.user) {
+          return res.status(401).json({ code: 401, message: '未认证' });
+        }
+        ownerId = req.user._id;
+      }
       const file = new File({
         filename: req.file.filename,
         originalname: req.file.originalname,
         path: req.file.path,
         size: req.file.size,
         mimetype: req.file.mimetype,
+        ownerType,
+        ownerId
       });
-
       await file.save();
       res.status(201).json({
         code: 201,
