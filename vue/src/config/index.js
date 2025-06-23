@@ -8,7 +8,7 @@ export const env = {
   },
   // 生产环境
   production: {
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
+    baseURL: import.meta.env.VITE_API_BASE_URL || '',
     title: import.meta.env.VITE_APP_TITLE || '个人主页',
     description: import.meta.env.VITE_APP_DESCRIPTION || '生产环境'
   },

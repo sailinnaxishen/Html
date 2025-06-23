@@ -26,17 +26,17 @@ export default defineConfig(({ mode }) => {
       allowedHosts: ["localhost", "127.0.0.1", "0.0.0.0", ".sealoshzh.site"],
       proxy: {
         "/api": {
-          target: "http://192.168.97.64:3000",
+          target: "http://192.168.115.64:3000",
           changeOrigin: true,
         },
       },
     },
     preview: {
       host: "0.0.0.0",
-      port: parseInt(env.VITE_production_PORT) || 3000,
+      port: 41737,
       proxy: {
         "/api": {
-          target: "",
+          target: "http://0.0.0.0:3000",
           changeOrigin: true,
         },
       },

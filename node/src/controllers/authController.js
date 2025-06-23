@@ -21,21 +21,37 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    console.log(`[Login] 开始处理: ${JSON.stringify(req.body)}`);
     const { username, password } = req.body;
+    
     if (!username || !password) {
+      console.warn('[Login] 用户名或密码为空');
       return res.status(400).json({ message: '用户名和密码不能为空' });
     }
+    
+    console.log(`[Login] 查找用户: ${username}`);
     const user = await User.findOne({ username });
+    
     if (!user) {
+      console.warn(`[Login] 用户不存在: ${username}`);
       return res.status(401).json({ message: '用户不存在' });
     }
+    
+    console.log(`[Login] 验证密码: ${username}`);
     const isMatch = await user.comparePassword(password);
+    
     if (!isMatch) {
+      console.warn(`[Login] 密码错误: ${username}`);
       return res.status(401).json({ message: '密码错误' });
     }
+    
+    console.log(`[Login] 生成Token: ${username}`);
     const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET || 'secret', { expiresIn: '7d' });
+    
+    console.log(`[Login] 登录成功: ${username}`);
     res.json({ token });
   } catch (err) {
+    console.error(`[Login] 系统错误: ${err.message}`);
     res.status(500).json({ message: '登录失败', error: err.message });
   }
 };

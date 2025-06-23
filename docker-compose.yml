@@ -6,7 +6,7 @@ services:
     ports:
       - "41737:80"
     environment:
-      - VITE_API_BASE_URL=http://backend:3000
+      - VITE_API_BASE_URL=
     depends_on:
       - backend
 

@@ -11,14 +11,18 @@
 - 实时热搜榜单（支持 bilibili 和微博）
 - 项目地址展示
 - 关于项目介绍
+- 明暗主题切换
+- 组件透明度调节
 
 ### 2. 网盘功能
-- 文件上传（支持多文件上传）
+- 文件上传（支持多文件上传和分片上传）
 - 文件下载
 - 文件删除
 - 文件列表展示
 - 文件大小和类型显示
 - 上传时间记录
+- 文件搜索和类型筛选
+- 公共云盘和个人云盘切换
 
 ### 3. 系统监控
 - CPU 使用率实时监控
@@ -27,11 +31,17 @@
 - 支持 NTP 时间和本地时间切换
 - 实时数据图表展示
 
-### 4. 主题功能
+### 4. 用户功能
+- 登录/注册
+- 修改密码
+- 支付宝账号绑定（示例功能）
+
+### 5. 主题功能
 - 支持明暗主题切换
 - 响应式设计
 - 优雅的动画效果
 - 自定义主题颜色
+- 组件透明度调节
 
 ## 技术栈
 
@@ -44,6 +54,7 @@
 - 样式处理：SCSS
 - 构建工具：Vite
 - 时间处理：Day.js
+- 文件分片上传：SparkMD5
 
 ## 快速开始
 
@@ -102,7 +113,18 @@ src/
 
 ### 环境配置
 - 开发环境：`.env.development`
+  ```env
+  VITE_API_BASE_URL=http://192.168.115.64:3000 # API请求路径
+  VITE_APP_TITLE=内网云盘
+  VITE_APP_DESCRIPTION=测试环境
+  VITE_production_PORT=41737 # 运行端口
+  ```
 - 生产环境：`.env.preview`
+  ```env
+  VITE_API_BASE_URL=http://localhost:3000 # API请求路径
+  VITE_APP_TITLE=本地网盘
+  VITE_production_PORT=41737 # 运行端口
+  ```
 
 ### API 配置
 - 默认 API：通过环境变量 `VITE_API_BASE_URL` 配置
@@ -113,7 +135,7 @@ src/
 - 主色调：`--primary-color`
 - 次色调：`--secondary-color`
 - 强调色：`--accent-color`
-- 背景图在 App.vue 第 40 行进行改动
+- 背景图在 `App.vue` 第 27 行onMounted进行改动
 
 ## 使用说明
 
@@ -125,16 +147,6 @@ src/
 ### 生产环境
 1. 构建项目：`npm run build`
 2. 预览构建结果：`npm run preview`
-
-### 清理构建
-```bash
-# 清除构建信息
-rm -rf dist
-rm -rf node_modules/.vite
-
-# 重新构建
-npm run build
-```
 
 ### 网盘使用
 1. 点击首页的网盘入口或导航到 `/files` 路径
@@ -151,7 +163,15 @@ npm run build
 2. 点击热搜条目可在新标签页打开对应链接
 
 ## 开发指南
+### 清理构建
+```bash
+# 清除构建信息
+rm -rf dist
+rm -rf node_modules/.vite
 
+# 重新构建
+npm run build
+```
 ### 代码规范
 - 使用 ESLint 进行代码检查
 - 使用 Prettier 进行代码格式化

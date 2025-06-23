@@ -32,6 +32,7 @@ app.use(cors(config.server.cors));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 // 静态文件服务（仅用于文件下载）
 app.use("/uploads", express.static(uploadDir));
 // API路由
@@ -40,6 +41,7 @@ app.use("/api/time", timeRoutes);
 app.use("/api/monitor", monitorRoutes);
 app.use("/api/hot-search", hotSearchRoutes);
 app.use("/api/auth", authRoutes);
+
 // 错误处理中间件
 app.use(errorHandler);
 const PORT = config.server.port;

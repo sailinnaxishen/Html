@@ -10,9 +10,15 @@ module.exports = {
     // 跨域配置
     cors: {
       // 允许的源
-      allowedOrigins: process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173', 'http://127.0.0.1:3000'],
-      // 允许的方法
-      allowedMethods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedOrigins: process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : [ 
+        'http://localhost:41737',
+        'http://localhost:3000',
+        'http://0.0.0.0:41737',
+        'http://0.0.0.0:3000',
+        'http://192.168.115.64:41737' 
+      ],
+      // 允许的方法 - 添加OPTIONS方法
+      allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       // 允许的头部
       allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
       // 暴露的头部

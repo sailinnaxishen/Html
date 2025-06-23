@@ -5,7 +5,11 @@ import { currentConfig, apiConfig } from '../config'
 const service = axios.create({
   baseURL: currentConfig.baseURL,
   timeout: apiConfig.timeout,
-  headers: apiConfig.headers
+  headers: apiConfig.headers,
+  validateStatus: function (status) {
+    // 允许2xx范围的状态码和304（未修改）
+    return (status >= 200 && status < 300) || status === 304;
+  },
 })
 
 // 请求拦截器
@@ -27,6 +31,11 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   response => {
+    // 如果状态码是304，表示内容未改变，是成功状态，但没有响应体。
+    // 直接返回一个特定值或undefined，让调用方知道无需更新数据。
+    if (response.status === 304) {
+      return Promise.resolve({ fromCache: true, message: 'Data is up-to-date.' });
+    }
     const res = response.data
     // 这里可以根据后端返回的状态码进行统一处理
     if (res.code === 200) {
@@ -39,42 +48,55 @@ service.interceptors.response.use(
   },
   error => {
     console.error('响应错误：', error)
+    if (error.response && error.response.status === 401) {
+      // 清理过期的登录信息
+      localStorage.removeItem('token');
+      localStorage.removeItem('userInfo');
+      // 跳转到登录页，并附带当前路径以便登录后返回
+      if (window.location.pathname !== '/login') {
+        window.location.href = `/login?redirect=${encodeURIComponent(window.location.pathname)}`;
+      }
+    }
     return Promise.reject(error)
   }
 )
 
 // 封装GET请求
-export function get(url, params) {
+export function get(url, params, config = {}) {
   return service({
     url,
     method: 'get',
-    params
+    params,
+    ...config,
   })
 }
 
 // 封装POST请求
-export function post(url, data) {
+export function post(url, data, config = {}) {
   return service({
     url,
     method: 'post',
-    data
+    data,
+    ...config,
   })
 }
 
 // 封装PUT请求
-export function put(url, data) {
+export function put(url, data, config = {}) {
   return service({
     url,
     method: 'put',
-    data
+    data,
+    ...config,
   })
 }
 
 // 封装DELETE请求
-export function del(url) {
+export function del(url, config = {}) {
   return service({
     url,
-    method: 'delete'
+    method: 'delete',
+    ...config,
   })
 }
 

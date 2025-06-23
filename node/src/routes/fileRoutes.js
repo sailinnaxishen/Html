@@ -9,6 +9,7 @@ const axios = require("axios");
 const iconv = require('iconv-lite');
 const jschardet = require('jschardet'); // 需要安装
 const auth = require('../middlewares/auth');
+const fileController = require('../controllers/fileController');
 
 // 配置文件上传（动态目录）
 const storage = multer.diskStorage({
@@ -273,6 +274,15 @@ router.post('/merge-chunks', async (req, res) => {
     writeStream.on('finish', async () => {
       // 清理分片
       fs.rmSync(chunkDir, { recursive: true, force: true });
+      // 提取小说关键信息（如为txt）
+      let novelInfo = null;
+      if (mimetype === "text/plain") {
+        try {
+          novelInfo = await fileController.extractNovelInfo(finalPath);
+        } catch (e) {
+          console.error('分片合并后提取novelInfo失败:', e);
+        }
+      }
       // 存入数据库
       const file = new File({
         filename: path.basename(finalPath),
@@ -280,7 +290,7 @@ router.post('/merge-chunks', async (req, res) => {
         mimetype,
         size,
         path: finalPath,
-        novelInfo: null,
+        novelInfo,
         md5: fileHash,
         ownerType,
         ownerId,

@@ -1,6 +1,9 @@
 const File = require("../models/File");
 const fs = require("fs").promises;
 const path = require("path");
+const axios = require("axios");
+const iconv = require('iconv-lite');
+const jschardet = require('jschardet');
 
 // 文件控制器类
 class FileController {
@@ -29,6 +32,44 @@ class FileController {
     }
   }
 
+  // 提取小说关键信息
+  async extractNovelInfo(filePath) {
+    try {
+      const buffer = await fs.readFile(filePath);
+      const detected = jschardet.detect(buffer);
+      let content;
+      if (detected.encoding && detected.encoding.toLowerCase() !== 'utf-8') {
+        content = iconv.decode(buffer, detected.encoding);
+      } else {
+        content = buffer.toString('utf-8');
+      }
+      content = content.substring(0, 9000);
+      const prompt = `帮我看一下这本小说写了什么，以以下格式提供:'''json{"name":"小说名字","author":"作者名字","P1":"主角1","P2":"主角2","tag":"小说的标签eg：abo、futa、扶她、姐妹、主受视角、主攻视角","about":"简介"'''}\n\n${content}`;
+      const response = await axios.post(
+        "https://api.deepseek.com/v1/chat/completions",
+        {
+          model: "deepseek-chat",
+          messages: [{ role: "user", content: prompt }],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer sk-c53a884c47b842f58a2068c2e37bf679",
+          },
+          timeout: 60000,
+        }
+      );
+      const text = response.data.choices[0].message.content;
+      const match = text.match(/\{[\s\S]*\}/);
+      if (match) {
+        return JSON.parse(match[0]);
+      }
+    } catch (err) {
+      console.error("deepseek解析失败:", err);
+    }
+    return null;
+  }
+
   // 上传文件
   async uploadFile(req, res) {
     try {
@@ -46,6 +87,10 @@ class FileController {
         }
         ownerId = req.user._id;
       }
+      let novelInfo = null;
+      if (req.file.mimetype === "text/plain") {
+        novelInfo = await this.extractNovelInfo(req.file.path);
+      }
       const file = new File({
         filename: req.file.filename,
         originalname: req.file.originalname,
@@ -53,7 +98,8 @@ class FileController {
         size: req.file.size,
         mimetype: req.file.mimetype,
         ownerType,
-        ownerId
+        ownerId,
+        novelInfo
       });
       await file.save();
       res.status(201).json({
